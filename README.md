@@ -2,12 +2,12 @@
 
 Trabajo Práctico Grupal de Algoritmos y Programación 2 2c2023.
 
-### Integrantes del grupo NOMBRE_GRUPO:
+### Integrantes del grupo "MARGINADOS" :
 
 1. PELLICIARI, Agustin - 108172 - apelliciari@fi.uba.ar
-2. APELLIDO, Nombre - Padron - Mail_FIUBA
-3. APELLIDO, Nombre - Padron - Mail_FIUBA
-4. APELLIDO, Nombre - Padron - Mail_FIUBA
+2. DIAZ, Mariano - 104029 - Mail_FIUBA
+3. FERNANDEZ, Adrian - 107780 - Mail_FIUBA
+4. GERVAN, Eduardo - Padron - egervan@fi.uba.ar
 
 ### Corrector asignado:
 
