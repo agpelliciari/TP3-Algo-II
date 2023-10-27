@@ -4,7 +4,7 @@ Trabajo Práctico Grupal de Algoritmos y Programación 2 2c2023.
 
 ### Integrantes del grupo NOMBRE_GRUPO:
 
-1. APELLIDO, Nombre - Padron - Mail_FIUBA
+1. PELLICIARI, Agustin - 108172 - apelliciari@fi.uba.ar
 2. APELLIDO, Nombre - Padron - Mail_FIUBA
 3. APELLIDO, Nombre - Padron - Mail_FIUBA
 4. APELLIDO, Nombre - Padron - Mail_FIUBA
