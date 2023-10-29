@@ -117,7 +117,7 @@ bool ABB<T,menor,igual>::consulta(T dato, NodoABB<T, menor, igual>* nodo_actual)
 
 template<typename T, bool menor(T, T), bool igual(T, T)> //publico
 bool ABB<T,menor,igual>::consulta(T dato){
-    consulta(raiz,dato);
+    return consulta(dato,raiz);
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)>  //OJO, es el privado.
