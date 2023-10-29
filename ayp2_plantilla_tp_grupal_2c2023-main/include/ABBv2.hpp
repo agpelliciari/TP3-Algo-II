@@ -115,4 +115,20 @@ bool consulta(T dato, NodoABB<T, menor, igual>* nodo_actual){
     }
 }
 
+template<typename T, bool menor(T, T), bool igual(T, T)>  //OJO, es el privado.
+void postorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos){
+
+    if (nodo_actual->hijo_izquierdo!=nullptr)
+        postorder(nodo_actual->hijo_izquierdo, datos);
+    if (nodo_actual->hijo_derecho!=nullptr)
+        postorder(nodo_actual->hijo_derecho, datos);
+    datos.push_back(nodo_actual->dato);
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)> //el publico q inicia desde la raiz.
+std::vector<T> postorder(){
+    std::vector<T> datos;
+    postorder(raiz,datos);
+    return datos;
+}
 #endif
