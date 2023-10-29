@@ -150,7 +150,7 @@ std::vector<T> ABB<T,menor,igual>::ancho(){
         {
             cola.push_back(cola.front()->hijo_izquierdo);
         }
-        
+
         if (cola.front()->hijo_derecho !=nullptr)
         {
             cola.push_back(cola.front()->hijo_derecho);
@@ -164,5 +164,10 @@ std::vector<T> ABB<T,menor,igual>::ancho(){
     delete cola;
     
     return datos;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+std::size_t ABB<T,menor,igual>::tamanio(){
+    return cantidad_datos;
 }
 #endif
