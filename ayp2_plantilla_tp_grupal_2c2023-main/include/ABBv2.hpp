@@ -136,4 +136,33 @@ std::vector<T> ABB<T,menor,igual>::postorder(){
     postorder(raiz,datos);
     return datos;
 }
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+std::vector<T> ABB<T,menor,igual>::ancho(){
+    std::vector<T> cola;
+    std::vector<T> datos;
+    
+    cola.push_back(raiz);
+
+    while (!cola.empty())
+    {
+        if (cola.front()->hijo_izquierdo !=nullptr)
+        {
+            cola.push_back(cola.front()->hijo_izquierdo);
+        }
+        
+        if (cola.front()->hijo_derecho !=nullptr)
+        {
+            cola.push_back(cola.front()->hijo_derecho);
+        }
+
+        datos.push_back(cola.front());
+
+        cola.erase(cola.front());
+    }
+
+    delete cola;
+    
+    return datos;
+}
 #endif
