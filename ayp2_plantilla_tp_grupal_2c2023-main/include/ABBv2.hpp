@@ -101,4 +101,18 @@ public:
     ~ABB();
 };
 
+template<typename T, bool menor(T, T), bool igual(T, T)>
+bool consulta(T dato, NodoABB<T, menor, igual>* nodo_actual){   
+    if (nodo_actual==nullptr)
+        return false;
+    else if (igual(nodo_actual->dato,dato))    
+        return true;                           //2 CASOS BASES O NO HAY HIJO (NULLPTR) o ENCONTRO DATO.
+    else{                                      //sino empieza la recurrencia. 
+        if (menor(nodo_actual->dato,dato))
+            return(consulta(dato,nodo_actual->hijo_izquierdo)) //si mas chico voy al subarbol izq
+        else
+            return (consulta(dato,nodo_actual->hijo_derecho)) //sino al derecho.
+    }
+}
+
 #endif
