@@ -101,8 +101,8 @@ public:
     ~ABB();
 };
 
-template<typename T, bool menor(T, T), bool igual(T, T)>
-bool consulta(T dato, NodoABB<T, menor, igual>* nodo_actual){   
+template<typename T, bool menor(T, T), bool igual(T, T)>  //Este es el privado.
+bool ABB<T,menor,igual>::consulta(T dato, NodoABB<T, menor, igual>* nodo_actual){   
     if (nodo_actual==nullptr)
         return false;
     else if (igual(nodo_actual->dato,dato))    
@@ -115,8 +115,13 @@ bool consulta(T dato, NodoABB<T, menor, igual>* nodo_actual){
     }
 }
 
+template<typename T, bool menor(T, T), bool igual(T, T)> //publico
+bool ABB<T,menor,igual>::consulta(T dato){
+    consulta(raiz,dato);
+}
+
 template<typename T, bool menor(T, T), bool igual(T, T)>  //OJO, es el privado.
-void postorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos){
+void ABB<T,menor,igual>::postorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos){
 
     if (nodo_actual->hijo_izquierdo!=nullptr)
         postorder(nodo_actual->hijo_izquierdo, datos);
@@ -126,7 +131,7 @@ void postorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos){
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)> //el publico q inicia desde la raiz.
-std::vector<T> postorder(){
+std::vector<T> ABB<T,menor,igual>::postorder(){
     std::vector<T> datos;
     postorder(raiz,datos);
     return datos;
