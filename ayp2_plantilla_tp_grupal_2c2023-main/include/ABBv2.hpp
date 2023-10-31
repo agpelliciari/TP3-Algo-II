@@ -136,4 +136,27 @@ std::vector<T> ABB<T,menor,igual>::postorder(){
     postorder(raiz,datos);
     return datos;
 }
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+void ABB<T, menor, igual>::preorder(NodoABB<T, menor, igual> *nodo_actual, std::vector<T> &datos) {
+    if (nodo_actual == nullptr){
+        return;
+    }
+
+    datos.push_back(nodo_actual->dato);
+
+    preorder(nodo_actual->hijo_izquierdo,datos);
+    preorder(nodo_actual->hijo_derecho,datos);
+
+}
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+std::vector<T> ABB<T, menor, igual>::preorder() {
+
+    std::vector<T> vector_preorder;
+    preorder(raiz,vector_preorder);
+
+    return vector_preorder;
+}
+
 #endif
