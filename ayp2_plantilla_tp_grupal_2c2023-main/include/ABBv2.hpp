@@ -101,6 +101,93 @@ public:
     ~ABB();
 };
 
+
+
+// --------------------------- IMPLEMENTACION -----------------------
+
+
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+ABB<T, menor, igual>::ABB() {
+
+    this->raiz = 0;
+    this ->cantidad_datos = 0;
+
+}
+
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+bool ABB<T, menor, igual>::vacio() {
+    return (this->raiz == 0);
+}
+
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::alta(T dato, NodoABB<T, menor, igual>* nodo_actual) {
+
+    if (menor(nodo_actual->dato, dato)) {
+
+        if (nodo_actual->hijo_derecho != 0) {
+
+            alta(dato, nodo_actual->hijo_derecho);  // Recursividad
+
+        }
+        else {
+
+            NodoABB<T, menor, igual>* puntero_nodo_nuevo = new NodoABB<T, menor, igual> ;
+            puntero_nodo_nuevo->dato = dato;
+            puntero_nodo_nuevo->padre = nodo_actual;
+            puntero_nodo_nuevo->hijo_izquierdo = 0;
+            puntero_nodo_nuevo->hijo_derecho = 0;
+
+            nodo_actual->hijo_derecho = puntero_nodo_nuevo;
+        }
+    }
+    else if (menor(dato, nodo_actual->dato)) {
+
+        if (nodo_actual->hijo_izquierdo != 0) {
+
+            alta(dato, nodo_actual->hijo_izquierdo);    // Recursividad
+
+        }
+        else {
+
+            NodoABB<T, menor, igual>* puntero_nodo_nuevo = new NodoABB<T, menor, igual> ;
+            puntero_nodo_nuevo->dato = dato;
+            puntero_nodo_nuevo->padre = nodo_actual;
+            puntero_nodo_nuevo->hijo_izquierdo = 0;
+            puntero_nodo_nuevo->hijo_derecho = 0;
+
+            nodo_actual->hijo_izquierdo = puntero_nodo_nuevo;
+        }
+    }
+    else {
+        throw ABB_exception();
+    }
+
+}
+
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::alta(T dato) {
+
+    if (vacio()) {
+
+        NodoABB<T, menor, igual>* puntero_nodo_nuevo = new NodoABB<T, menor, igual> ;
+        puntero_nodo_nuevo->dato = dato;
+        puntero_nodo_nuevo->hijo_izquierdo = 0;
+        puntero_nodo_nuevo->hijo_derecho = 0;
+        puntero_nodo_nuevo->padre = 0;
+
+        this->raiz = puntero_nodo_nuevo;
+
+    }
+    else {
+        alta(dato, this->raiz);
+    }
+}
+
+
 template<typename T, bool menor(T, T), bool igual(T, T)>  //Este es el privado.
 bool ABB<T,menor,igual>::consulta(T dato, NodoABB<T, menor, igual>* nodo_actual){   
     if (nodo_actual==nullptr)
@@ -115,10 +202,41 @@ bool ABB<T,menor,igual>::consulta(T dato, NodoABB<T, menor, igual>* nodo_actual)
     }
 }
 
+
 template<typename T, bool menor(T, T), bool igual(T, T)> //publico
 bool ABB<T,menor,igual>::consulta(T dato){
     return consulta(dato,raiz);
 }
+
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::inorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos) {
+
+    if (nodo_actual->hijo_izquierdo != 0) {
+        inorder(nodo_actual->hijo_izquierdo, datos);
+    }
+
+    datos.push_back(nodo_actual->dato);
+    
+    if (nodo_actual->hijo_derecho != 0) {
+        inorder(nodo_actual->hijo_derecho, datos);
+    }
+
+}
+
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+std::vector<T> ABB<T, menor, igual>::inorder() {
+
+    std::vector<T> datos;
+
+    if (!vacio()) {
+        inorder(this->raiz, datos);
+    }
+    return datos;
+
+}
+
 
 template<typename T, bool menor(T, T), bool igual(T, T)>  //OJO, es el privado.
 void ABB<T,menor,igual>::postorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos){
@@ -130,10 +248,13 @@ void ABB<T,menor,igual>::postorder(NodoABB<T, menor, igual>* nodo_actual, std::v
     datos.push_back(nodo_actual->dato);
 }
 
+
 template<typename T, bool menor(T, T), bool igual(T, T)> //el publico q inicia desde la raiz.
 std::vector<T> ABB<T,menor,igual>::postorder(){
     std::vector<T> datos;
     postorder(raiz,datos);
     return datos;
 }
+
+
 #endif
