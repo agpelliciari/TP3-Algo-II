@@ -3,6 +3,9 @@
 
 #include <exception>
 #include "NodoABBv2.hpp"
+#include <queue>
+
+using namespace std;
 
 class ABB_exception : public std::exception {
 };
@@ -101,18 +104,21 @@ public:
     ~ABB();
 };
 
+
+
 // --------------------------- IMPLEMENTACION -----------------------
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+ABB<T, menor, igual>::~ABB() {
+
+}
+
 template<typename T, bool menor(T, T), bool igual(T, T)>
 ABB<T, menor, igual>::ABB() {
 
     this->raiz = 0;
     this ->cantidad_datos = 0;
 
-}
-
-template<typename T, bool menor(T, T), bool igual(T, T)>
-bool ABB<T, menor, igual>::vacio() {
-    return (this->raiz == 0);
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
@@ -177,6 +183,8 @@ void ABB<T, menor, igual>::alta(T dato) {
     else {
         alta(dato, this->raiz);
     }
+
+    cantidad_datos++;
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)>  //Este es el privado.
@@ -187,9 +195,9 @@ bool ABB<T,menor,igual>::consulta(T dato, NodoABB<T, menor, igual>* nodo_actual)
         return true;                           //2 CASOS BASES O NO HAY HIJO (NULLPTR) o ENCONTRO DATO.
     else{                                      //sino empieza la recurrencia. 
         if (menor(nodo_actual->dato,dato))
-            return(consulta(dato,nodo_actual->hijo_izquierdo)) //si mas chico voy al subarbol izq
+            return(consulta(dato,nodo_actual->hijo_izquierdo)); //si mas chico voy al subarbol izq
         else
-            return (consulta(dato,nodo_actual->hijo_derecho)) //sino al derecho.
+            return (consulta(dato,nodo_actual->hijo_derecho)); //sino al derecho.
     }
 }
 
@@ -263,34 +271,35 @@ std::vector<T> ABB<T, menor, igual>::preorder() {
     return vector_preorder;
 }
 
-template<typename T, bool menor(T, T), bool igual(T, T)>
+/*template<typename T, bool menor(T, T), bool igual(T, T)>
 std::vector<T> ABB<T,menor,igual>::ancho(){
-    std::vector<T> cola;
+    std::queue<T> cola;
     std::vector<T> datos;
-    
-    cola.push_back(raiz);
+    NodoABB<T, menor, igual>* nodo_actual = raiz;
 
-    while (!cola.empty())
+    cola.push(nodo_actual->dato);
+
+    while (cola.size() != 0)
     {
-        if (cola.front()->hijo_izquierdo !=nullptr)
+        nodo_actual->dato = cola.front();
+
+        if (nodo_actual->hijo_izquierdo !=nullptr)
         {
-            cola.push_back(cola.front()->hijo_izquierdo);
+            cola.push(nodo_actual->hijo_izquierdo->dato);
         }
 
-        if (cola.front()->hijo_derecho !=nullptr)
+        if (nodo_actual->hijo_derecho !=nullptr)
         {
-            cola.push_back(cola.front()->hijo_derecho);
+            cola.push(nodo_actual->hijo_derecho->dato);
         }
 
-        datos.push_back(cola.front());
+        datos.push_back(nodo_actual->dato);
 
-        cola.erase(cola.front());
+        cola.pop();
     }
 
-    delete cola;
-    
     return datos;
-}
+}*/
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
 std::size_t ABB<T,menor,igual>::tamanio(){
@@ -301,4 +310,5 @@ template<typename T, bool menor(T, T), bool igual(T, T)>
 bool ABB<T,menor,igual>::vacio(){
     return cantidad_datos == 0;
 }
+
 #endif
