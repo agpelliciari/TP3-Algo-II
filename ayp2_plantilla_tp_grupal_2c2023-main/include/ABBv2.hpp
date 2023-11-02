@@ -101,12 +101,7 @@ public:
     ~ABB();
 };
 
-
-
 // --------------------------- IMPLEMENTACION -----------------------
-
-
-
 template<typename T, bool menor(T, T), bool igual(T, T)>
 ABB<T, menor, igual>::ABB() {
 
@@ -115,12 +110,10 @@ ABB<T, menor, igual>::ABB() {
 
 }
 
-
 template<typename T, bool menor(T, T), bool igual(T, T)>
 bool ABB<T, menor, igual>::vacio() {
     return (this->raiz == 0);
 }
-
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
 void ABB<T, menor, igual>::alta(T dato, NodoABB<T, menor, igual>* nodo_actual) {
@@ -167,7 +160,6 @@ void ABB<T, menor, igual>::alta(T dato, NodoABB<T, menor, igual>* nodo_actual) {
 
 }
 
-
 template<typename T, bool menor(T, T), bool igual(T, T)>
 void ABB<T, menor, igual>::alta(T dato) {
 
@@ -187,7 +179,6 @@ void ABB<T, menor, igual>::alta(T dato) {
     }
 }
 
-
 template<typename T, bool menor(T, T), bool igual(T, T)>  //Este es el privado.
 bool ABB<T,menor,igual>::consulta(T dato, NodoABB<T, menor, igual>* nodo_actual){   
     if (nodo_actual==nullptr)
@@ -202,12 +193,10 @@ bool ABB<T,menor,igual>::consulta(T dato, NodoABB<T, menor, igual>* nodo_actual)
     }
 }
 
-
 template<typename T, bool menor(T, T), bool igual(T, T)> //publico
 bool ABB<T,menor,igual>::consulta(T dato){
     return consulta(dato,raiz);
 }
-
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
 void ABB<T, menor, igual>::inorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos) {
@@ -221,9 +210,7 @@ void ABB<T, menor, igual>::inorder(NodoABB<T, menor, igual>* nodo_actual, std::v
     if (nodo_actual->hijo_derecho != 0) {
         inorder(nodo_actual->hijo_derecho, datos);
     }
-
 }
-
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
 std::vector<T> ABB<T, menor, igual>::inorder() {
@@ -237,7 +224,6 @@ std::vector<T> ABB<T, menor, igual>::inorder() {
 
 }
 
-
 template<typename T, bool menor(T, T), bool igual(T, T)>  //OJO, es el privado.
 void ABB<T,menor,igual>::postorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos){
 
@@ -247,7 +233,6 @@ void ABB<T,menor,igual>::postorder(NodoABB<T, menor, igual>* nodo_actual, std::v
         postorder(nodo_actual->hijo_derecho, datos);
     datos.push_back(nodo_actual->dato);
 }
-
 
 template<typename T, bool menor(T, T), bool igual(T, T)> //el publico q inicia desde la raiz.
 std::vector<T> ABB<T,menor,igual>::postorder(){
@@ -278,4 +263,42 @@ std::vector<T> ABB<T, menor, igual>::preorder() {
     return vector_preorder;
 }
 
+template<typename T, bool menor(T, T), bool igual(T, T)>
+std::vector<T> ABB<T,menor,igual>::ancho(){
+    std::vector<T> cola;
+    std::vector<T> datos;
+    
+    cola.push_back(raiz);
+
+    while (!cola.empty())
+    {
+        if (cola.front()->hijo_izquierdo !=nullptr)
+        {
+            cola.push_back(cola.front()->hijo_izquierdo);
+        }
+
+        if (cola.front()->hijo_derecho !=nullptr)
+        {
+            cola.push_back(cola.front()->hijo_derecho);
+        }
+
+        datos.push_back(cola.front());
+
+        cola.erase(cola.front());
+    }
+
+    delete cola;
+    
+    return datos;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+std::size_t ABB<T,menor,igual>::tamanio(){
+    return cantidad_datos;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+bool ABB<T,menor,igual>::vacio(){
+    return cantidad_datos == 0;
+}
 #endif
