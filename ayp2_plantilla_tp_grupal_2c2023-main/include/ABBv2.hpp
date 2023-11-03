@@ -3,7 +3,6 @@
 
 #include <exception>
 #include "NodoABBv2.hpp"
-#include <queue>
 
 using namespace std;
 
@@ -271,26 +270,26 @@ std::vector<T> ABB<T, menor, igual>::preorder() {
     return vector_preorder;
 }
 
-/*template<typename T, bool menor(T, T), bool igual(T, T)>
+template<typename T, bool menor(T, T), bool igual(T, T)>
 std::vector<T> ABB<T,menor,igual>::ancho(){
-    std::queue<T> cola;
+    std::queue<NodoABB<T, menor, igual>*> cola;
     std::vector<T> datos;
     NodoABB<T, menor, igual>* nodo_actual = raiz;
 
-    cola.push(nodo_actual->dato);
+    cola.push(nodo_actual);
 
     while (cola.size() != 0)
     {
-        nodo_actual->dato = cola.front();
+        nodo_actual = cola.front();
 
         if (nodo_actual->hijo_izquierdo !=nullptr)
         {
-            cola.push(nodo_actual->hijo_izquierdo->dato);
+            cola.push(nodo_actual->hijo_izquierdo);
         }
 
         if (nodo_actual->hijo_derecho !=nullptr)
         {
-            cola.push(nodo_actual->hijo_derecho->dato);
+            cola.push(nodo_actual->hijo_derecho);
         }
 
         datos.push_back(nodo_actual->dato);
@@ -299,7 +298,7 @@ std::vector<T> ABB<T,menor,igual>::ancho(){
     }
 
     return datos;
-}*/
+}
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
 std::size_t ABB<T,menor,igual>::tamanio(){
