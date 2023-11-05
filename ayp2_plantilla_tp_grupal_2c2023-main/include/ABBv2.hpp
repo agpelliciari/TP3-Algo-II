@@ -17,9 +17,22 @@ private:
 
     NodoABB<T,menor,igual>* buscar_sucesor(NodoABB<T,menor,igual>* nodo_actual);
 
+    // Pre: -
+    // Post: Devuelve true si el nodo ingresado no tiene padre.
     bool es_raiz(NodoABB<T,menor,igual> nodo_actual);
+
+    // Pre: -
+    // Post: Devuelve true si el nodo ingresado es el hijo izquierdo de su padre.
     bool es_hijo_izquierdo(NodoABB<T, menor, igual> nodo_actual);
-    void cambiar_referencia(NodoABB<T, menor, igual> nodo_actual, NodoABB<T, menor, igual> reemplazo);
+
+    // Pre: -
+    // Post: Cambia las referencias del nodo a borrar a las de su reemplazo.
+    void cambiar_referencia(NodoABB<T, menor, igual> nodo_actual, NodoABB<T, menor, igual>* reemplazo);
+
+
+    // Pre: -
+    // Post: Devuelve true si el nodo ingresado no tiene hijos.
+    bool es_hoja(NodoABB<T, menor, igual>* nodo_actual);
 
     // Pre: -
     // Post: Agrega el dato al árbol.
@@ -109,149 +122,11 @@ public:
     ~ABB();
 };
 
-template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
-void ABB<T, menor, igual>::cambiar_referencia(NodoABB<T, menor, igual> nodo_actual, NodoABB<T, menor, igual> reemplazo) {
-
-        if(nodo_actual.hijo_izquierdo == nullptr && nodo_actual.hijo_derecho == nullptr){
-
-            if(es_hijo_izquierdo(nodo_actual)){
-
-                nodo_actual.padre->hijo_izquierdo = nullptr ;
-
-            } else{
-
-                nodo_actual.padre->hijo_derecho= nullptr ;
-
-            }
-
-        } else{
-
-            if(es_hijo_izquierdo(nodo_actual)){
-
-                nodo_actual.padre->hijo_izquierdo = &reemplazo ;
-
-            } else{
-
-                nodo_actual.padre->hijo_derecho= &reemplazo ;
-
-            }
-
-        }
-
-}
-
-template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
-bool ABB<T, menor, igual>::es_raiz(NodoABB<T, menor, igual> nodo_actual) {
-    return nodo_actual.dato == raiz->dato;
-}
-
-template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
-bool ABB<T, menor, igual>::es_hijo_izquierdo(NodoABB<T, menor, igual> nodo_actual) {
-    return nodo_actual.dato == nodo_actual.padre->hijo_izquierdo->dato;
-}
-
-
-template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
-NodoABB<T, menor, igual>* ABB<T, menor, igual>::buscar_sucesor(NodoABB<T, menor, igual>* nodo_actual) {
-
-    if (nodo_actual->hijo_izquierdo == nullptr){
-
-        return nodo_actual;
-
-    }
-
-    buscar_sucesor(nodo_actual->hijo_izquierdo);
-
-}
-
-
-template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
-void ABB<T, menor, igual>::baja(T dato, NodoABB<T, menor, igual> *nodo_actual) {
-
-    if(igual(dato,nodo_actual->dato)){
-
-        if (es_raiz(*nodo_actual)){
-
-            if (raiz->hijo_derecho == nullptr && raiz->hijo_izquierdo == nullptr){
-
-                raiz = nullptr;
-
-            } else if(raiz->hijo_izquierdo == nullptr){
-
-                raiz = raiz->hijo_derecho;
-
-            } else if(raiz->hijo_derecho == nullptr){
-
-                raiz = raiz->hijo_izquierdo;
-
-            } else{
-
-                NodoABB<T, menor, igual>* sucesor = new NodoABB<T, menor, igual>;
-                sucesor = buscar_sucesor(nodo_actual->hijo_derecho);
-                baja(sucesor->dato,sucesor);
-                raiz->dato = sucesor->dato;
-
-            }
-
-        } else{
-
-            if (nodo_actual->hijo_derecho == nullptr && nodo_actual->hijo_izquierdo == nullptr){
-
-                cambiar_referencia(*nodo_actual,*nodo_actual);
-
-            } else if(nodo_actual->hijo_izquierdo == nullptr){
-
-                cambiar_referencia(*nodo_actual,*nodo_actual->hijo_derecho);
-
-
-            } else if(nodo_actual->hijo_derecho == nullptr){
-
-                cambiar_referencia(*nodo_actual,*nodo_actual->hijo_izquierdo);
-
-            } else{
-                NodoABB<T, menor, igual>* sucesor = new NodoABB<T, menor, igual>;
-                sucesor = buscar_sucesor(nodo_actual);
-
-                cambiar_referencia(*nodo_actual,*sucesor);
-
-                baja(sucesor->dato);
-            }
-
-
-        }
-
-    } else if (menor(dato,nodo_actual->dato)) {
-
-        baja(dato,nodo_actual->hijo_izquierdo);
-
-
-    } else{
-
-        baja(dato,nodo_actual->hijo_derecho);
-
-    }
-
-
-}
-
-template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
-void ABB<T, menor, igual>::baja(T dato) {
-
-    if (consulta(dato,raiz)){
-
-        baja(dato,raiz);
-        cantidad_datos--;
-
-    }
-
-}
-
 // --------------------------- IMPLEMENTACION -----------------------
 
 template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
 ABB<T, menor, igual>::~ABB() {
-
-
+    
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
@@ -451,5 +326,149 @@ template<typename T, bool menor(T, T), bool igual(T, T)>
 bool ABB<T,menor,igual>::vacio(){
     return cantidad_datos == 0;
 }
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+void ABB<T, menor, igual>::baja(T dato, NodoABB<T, menor, igual> *nodo_actual) {
+
+    if(igual(dato,nodo_actual->dato)){
+
+        if (es_raiz(*nodo_actual)){
+
+            if (es_hoja(raiz)){
+
+                raiz = nullptr;
+
+            } else if(raiz->hijo_izquierdo == nullptr){
+
+                raiz = raiz->hijo_derecho;
+
+            } else if(raiz->hijo_derecho == nullptr){
+
+                raiz = raiz->hijo_izquierdo;
+
+            } else{
+
+                NodoABB<T, menor, igual>* sucesor = new NodoABB<T, menor, igual>;
+                sucesor = buscar_sucesor(nodo_actual->hijo_derecho);
+                baja(sucesor->dato,sucesor);
+                raiz->dato = sucesor->dato;
+
+            }
+
+        } else{
+
+            if (es_hoja(nodo_actual)){
+
+                cambiar_referencia(*nodo_actual,nodo_actual);
+
+            } else if(nodo_actual->hijo_izquierdo == nullptr){
+
+                cambiar_referencia(*nodo_actual,nodo_actual->hijo_derecho);
+
+
+            } else if(nodo_actual->hijo_derecho == nullptr){
+
+                cambiar_referencia(*nodo_actual,nodo_actual->hijo_izquierdo);
+
+
+            } else{
+
+                NodoABB<T, menor, igual>* sucesor = new NodoABB<T, menor, igual>;
+                sucesor = buscar_sucesor(nodo_actual);
+
+                cambiar_referencia(*nodo_actual,sucesor);
+
+                baja(sucesor->dato);
+
+            }
+        }
+
+    } else if (menor(dato,nodo_actual->dato)) {
+
+        baja(dato,nodo_actual->hijo_izquierdo);
+
+    } else{
+
+        baja(dato,nodo_actual->hijo_derecho);
+
+    }
+
+}
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+void ABB<T, menor, igual>::baja(T dato) {
+
+    if (consulta(dato,raiz)){
+
+        baja(dato,raiz);
+        cantidad_datos--;
+
+    }
+
+}
+
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+bool ABB<T, menor, igual>::es_hoja(NodoABB<T, menor, igual> *nodo_actual) {
+    return (nodo_actual->hijo_izquierdo == nullptr) && (nodo_actual->hijo_derecho == nullptr);
+}
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+void ABB<T, menor, igual>::cambiar_referencia(NodoABB<T, menor, igual> nodo_actual, NodoABB<T, menor, igual>* reemplazo) {
+
+    if(es_hoja(&nodo_actual)){
+
+        if(es_hijo_izquierdo(nodo_actual)){
+
+            nodo_actual.padre->hijo_izquierdo = nullptr ;
+
+        } else{
+
+            nodo_actual.padre->hijo_derecho= nullptr ;
+
+        }
+
+
+    } else{
+
+        if(es_hijo_izquierdo(nodo_actual)){
+
+            nodo_actual.padre->hijo_izquierdo = reemplazo;
+            reemplazo->padre = nodo_actual.padre;
+
+        } else{
+
+            nodo_actual.padre->hijo_derecho= reemplazo;
+            reemplazo->padre = nodo_actual.padre;
+
+        }
+
+    }
+
+}
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+bool ABB<T, menor, igual>::es_raiz(NodoABB<T, menor, igual> nodo_actual) {
+    return nodo_actual.dato == raiz->dato;
+}
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+bool ABB<T, menor, igual>::es_hijo_izquierdo(NodoABB<T, menor, igual> nodo_actual) {
+    return nodo_actual.dato == nodo_actual.padre->hijo_izquierdo->dato;
+}
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+NodoABB<T, menor, igual>* ABB<T, menor, igual>::buscar_sucesor(NodoABB<T, menor, igual>* nodo_actual) {
+
+    if (nodo_actual->hijo_izquierdo == nullptr){
+
+        return nodo_actual;
+
+    }
+
+    buscar_sucesor(nodo_actual->hijo_izquierdo);
+
+}
+
 
 #endif
