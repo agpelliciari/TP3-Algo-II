@@ -64,6 +64,8 @@ private:
     // Post: Ejecuta el método/función en el subárbol.
     void ejecutar(void metodo(T), NodoABB<T, menor, igual>* nodo_actual);
 
+    void liberar_memoria(NodoABB<T, menor, igual>* nodo_actual);
+
 public:
     // Constructor.
     ABB();
@@ -123,11 +125,6 @@ public:
 };
 
 // --------------------------- IMPLEMENTACION -----------------------
-
-template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
-ABB<T, menor, igual>::~ABB() {
-    
-}
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
 ABB<T, menor, igual>::ABB() {
@@ -348,7 +345,7 @@ void ABB<T, menor, igual>::baja(T dato, NodoABB<T, menor, igual> *nodo_actual) {
 
             } else{
 
-                NodoABB<T, menor, igual>* sucesor = new NodoABB<T, menor, igual>;
+                NodoABB<T, menor, igual>* sucesor;
                 sucesor = buscar_sucesor(nodo_actual->hijo_derecho);
                 baja(sucesor->dato,sucesor);
                 raiz->dato = sucesor->dato;
@@ -373,7 +370,7 @@ void ABB<T, menor, igual>::baja(T dato, NodoABB<T, menor, igual> *nodo_actual) {
 
             } else{
 
-                NodoABB<T, menor, igual>* sucesor = new NodoABB<T, menor, igual>;
+                NodoABB<T, menor, igual>* sucesor;
                 sucesor = buscar_sucesor(nodo_actual);
 
                 cambiar_referencia(*nodo_actual,sucesor);
@@ -468,6 +465,24 @@ NodoABB<T, menor, igual>* ABB<T, menor, igual>::buscar_sucesor(NodoABB<T, menor,
 
     buscar_sucesor(nodo_actual->hijo_izquierdo);
 
+}
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+void ABB<T, menor, igual>::liberar_memoria(NodoABB<T, menor, igual>* nodo_actual) {
+
+    if(!nodo_actual){
+        return;
+    }
+    liberar_memoria(nodo_actual->hijo_izquierdo);
+    liberar_memoria(nodo_actual->hijo_derecho);
+    delete(nodo_actual);
+    cantidad_datos--;
+}
+
+template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
+ABB<T, menor, igual>::~ABB() {
+
+    liberar_memoria(raiz);
 }
 
 
