@@ -15,6 +15,7 @@ include_directories(bGVjdG9y)
 
 add_executable(ayp2_plantilla_tp_grupal_2c2023
         src/Placa.cpp
+        src/Arma.cpp
         bGVjdG9y/bGVjdG9y.cpp
         bGVjdG9y/ZGVjb2Rl.cpp
         main.cpp
