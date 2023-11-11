@@ -5,7 +5,7 @@ bool mayor(int a, int b) {
     return a > b;
 }
 
-class ABB_tests : public ::testing::Test {
+class Heap_tests : public ::testing::Test {
 protected:
     Heap<int, mayor> heap{};
 
@@ -19,7 +19,7 @@ protected:
     }
 };
 
-TEST_F(ABB_tests, alta) {
+TEST_F(Heap_tests, alta) {
     cargar(heap);
     heap.alta(8);
     ASSERT_EQ(heap.primero(), 16);
@@ -29,32 +29,32 @@ TEST_F(ABB_tests, alta) {
     ASSERT_EQ(heap.tamanio(), 8);
 }
 
-TEST_F(ABB_tests, baja) {
+TEST_F(Heap_tests, baja) {
     cargar(heap);
     ASSERT_EQ(heap.baja(), 16);
     ASSERT_EQ(heap.tamanio(), 5);
 }
 
-TEST_F(ABB_tests, baja_maneja_heap_vacio) {
+TEST_F(Heap_tests, baja_maneja_heap_vacio) {
     EXPECT_THROW(heap.baja(), Heap_exception);
 }
 
-TEST_F(ABB_tests, primero) {
+TEST_F(Heap_tests, primero) {
     cargar(heap);
     ASSERT_EQ(heap.primero(), 16);
 }
 
-TEST_F(ABB_tests, primero_maneja_heap_vacio) {
+TEST_F(Heap_tests, primero_maneja_heap_vacio) {
     EXPECT_THROW(heap.primero(), Heap_exception);
 }
 
-TEST_F(ABB_tests, vacio) {
+TEST_F(Heap_tests, vacio) {
     ASSERT_TRUE(heap.vacio());
     cargar(heap);
     ASSERT_FALSE(heap.vacio());
 }
 
-TEST_F(ABB_tests, tamanio) {
+TEST_F(Heap_tests, tamanio) {
     cargar(heap);
     ASSERT_EQ(heap.tamanio(), 6);
 }

@@ -56,6 +56,12 @@ public:
     // Post: Devuelve la cantidad de datos en el heap.
     size_t tamanio();
 
+    // El constructor de copia está deshabilitado.
+    Heap(const Heap& heap) = delete;
+
+    // El operador = (asignación) está deshabilitado.
+    void operator=(const Heap& heap) = delete;
+
     // Destructor.
     ~Heap();
 };
