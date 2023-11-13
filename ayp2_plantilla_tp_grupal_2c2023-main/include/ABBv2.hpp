@@ -463,8 +463,9 @@ NodoABB<T, menor, igual>* ABB<T, menor, igual>::buscar_sucesor(NodoABB<T, menor,
 
     }
 
-    buscar_sucesor(nodo_actual->hijo_izquierdo);
+    nodo_actual = buscar_sucesor(nodo_actual->hijo_izquierdo);
 
+    return nodo_actual;
 }
 
 template<typename T, bool (*menor)(T, T), bool (*igual)(T, T)>
