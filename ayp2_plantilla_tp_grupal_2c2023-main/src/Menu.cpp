@@ -65,7 +65,7 @@ void Menu::usar(Arbol_de_placas* puntero_arbol_placas) {
                 getline(cin, id_placa);
                 Placa* placa_a_buscar = new Placa("vacio", "vacio", stoi(id_placa));
                 puntero_arbol_placas->consulta_placa(placa_a_buscar);
-                delete placa_a_buscar;
+                Placa::liberar(placa_a_buscar);
 
             } else {
                 cout << "Lo siento el Arbol de Placas no realiza la accion ingresada"<< endl;
