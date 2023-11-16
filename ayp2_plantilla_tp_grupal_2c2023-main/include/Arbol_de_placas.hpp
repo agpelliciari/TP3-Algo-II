@@ -26,7 +26,7 @@ public:
 
     // Pre: arbol_placas no puede estar vacio.
     // Post: Devuelve true si se encuentra la placa segun el id indicado.
-    void consulta_placa(int id_placa);
+    void consulta_placa(Placa* puntero_placa);
 
     // Destructor.
     ~Arbol_de_placas();
