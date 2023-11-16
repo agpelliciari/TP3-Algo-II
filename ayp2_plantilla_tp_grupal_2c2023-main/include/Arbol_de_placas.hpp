@@ -3,6 +3,7 @@
 
 #include "ABBv2.hpp"
 #include "Placa.hpp"
+#include "bGVjdG9y.hpp"
 
 const std::string ACCION_ALTA = "alta";
 const std::string ACCION_BAJA = "baja";
@@ -20,13 +21,17 @@ public:
     // Post: Agrega la placa y la organiza acorde a la función de comparación del árbol por ID.
     void alta_placa(Placa* puntero_placa);
 
-    // Pre: 
-    // Post:
-    void baja_placa(std::string nombre_placa);   // no se si el parametro debe ser el nombre, la leyenda o el id de la placa.
+    // Pre: El arbol no puede estar vacio.
+    // Post: Se elimina la placa del arbol, si se encuentra.
+    void baja_placa(int id_placa);
 
-    // Pre: arbol_placas no puede estar vacio.
-    // Post: Devuelve true si se encuentra la placa segun el id indicado.
-    void consulta_placa(Placa* puntero_placa);
+    // Pre: El arbol no puede estar vacio.
+    // Post: Imprime un mensaje por pantalla si se encuentra la placa buscada o no.
+    void consulta_placa(int id_placa);
+    
+    // Pre: -.
+    // Post: Imprime por pantalla el orden del mensaje cargado en el arbol.
+    void mostrar_mensaje_descifrado();
 
     // Destructor.
     ~Arbol_de_placas();

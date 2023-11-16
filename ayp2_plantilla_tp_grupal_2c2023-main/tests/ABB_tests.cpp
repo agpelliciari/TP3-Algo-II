@@ -1,5 +1,5 @@
 #include "gmock/gmock.h"
-#include "ABB.hpp"
+#include "ABBv2.hpp"
 
 bool menor(int a, int b) {
     return a < b;
@@ -69,6 +69,7 @@ TEST_F(ABB_tests, ancho) {
     ASSERT_THAT(datos, testing::ElementsAre(10, 7, 13, 3, 11, 16));
 }
 
+
 TEST_F(ABB_tests, tamanio) {
     cargar(arbol);
     ASSERT_EQ(arbol.tamanio(), 6);
@@ -80,8 +81,7 @@ TEST_F(ABB_tests, vacio) {
     ASSERT_FALSE(arbol.vacio());
 }
 
-// Descomentar este test si el equipo implementa baja fisica. Usar sucesor.
-/*
+
 TEST_F(ABB_tests, baja) {
     cargar(arbol);
     arbol.baja(10);
@@ -112,4 +112,3 @@ TEST_F(ABB_tests, baja) {
     ASSERT_THAT(arbol.ancho(), testing::ElementsAre(11, 7, 3));
     ASSERT_EQ(arbol.tamanio(), 3);
 }
-*/
