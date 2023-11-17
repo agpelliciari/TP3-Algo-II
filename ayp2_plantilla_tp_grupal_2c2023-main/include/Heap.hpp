@@ -65,5 +65,4 @@ public:
     // Destructor.
     ~Heap();
 };
-
 #endif
