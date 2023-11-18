@@ -33,18 +33,6 @@ private:
     // Post: Devuelve la posicion del padre del  elemento con el indice pasado por parametro.
     size_t obtener_posicion_padre(size_t indice);
 
-    // Pre: Si el indice es mayor a el tamaño logico del vector, el elemento no tiene hijo izquierdo.
-    // Post: Devuelve la posicion del hijo izquierdo del elemento con el indice pasado por parametro.
-    size_t obtener_posicion_hijo_izquierdo(size_t indice);
-
-    // Pre: Si el indice es mayor a el tamaño logico del vector, el elemento no tiene hijo derecho.
-    // Post: Devuelve la posicion del hijo derecho del elemento con el indice pasado por parametro.
-    size_t obtener_posicion_hijo_derecho(size_t indice);
-
-    // Pre: -
-    // Post: Devuelve la posicion del elemento mayor entre los indices pasados por parametro.
-    size_t obtener_posicion_dato_mayor(size_t indice_izq, size_t indice_der);
-
     // NOTA: No es necesario que lancen excepciones en estos métodos porque son privados.
     // Deberian siempre asegurar que los indices pasados por parámetros son válidos.
     // Consideren cada caso con detenimiento.
@@ -61,6 +49,14 @@ public:
     // Pre: El heap no puede estar vacío.
     // Post: Elimina y devuelve el primer dato.
     T baja();
+    
+    // Pre: El heap no puede estar vacío.
+    // Post: Ordena el vector de forma creciente usando un heap de maxima.
+    void heapsort();
+    
+    // Pre: El heap no puede estar vacío.
+    // Post: Convierte el vector en un heap de maxima.
+    void rearmar_heap(size_t tamanio_logico, size_t indice);
 
     // Pre: El heap no puede estar vacío.
     // Post: Devuelve el primer dato.
@@ -87,6 +83,39 @@ public:
 template<typename T, bool comp(T, T)>
 Heap<T, comp>::Heap(){
     this->datos = datos;
+}
+
+template<class T, bool (*comp)(T, T)>
+void Heap<T, comp>::heapsort(){
+    for (size_t i = tamanio() - 1; i > 0; i--)
+    {
+        swap(0, i);
+        rearmar_heap(i, 0);
+    }
+}
+
+template<class T, bool (*comp)(T, T)>
+void Heap<T, comp>::rearmar_heap(size_t tamanio_logico, size_t indice){
+    size_t indice_mayor = indice;
+    size_t indice_hijo_izq = 2*indice + 1;
+    size_t indice_hijo_der = 2*indice + 2;
+    
+    if (indice_hijo_izq < tamanio_logico && datos[indice_hijo_izq] > datos[indice_mayor])
+    {
+        indice_mayor = indice_hijo_izq;
+    }
+
+    if (indice_hijo_der < tamanio_logico && datos[indice_hijo_der] > datos[indice_mayor])
+    {
+        indice_mayor = indice_hijo_der;
+    }
+
+    if (indice_mayor != indice)
+    {
+        swap(indice, indice_mayor);
+        indice = indice_mayor;
+        rearmar_heap(tamanio_logico, indice);
+    }
 }
 
 template<typename T, bool comp(T, T)>
@@ -161,45 +190,26 @@ T Heap<T, comp>::baja(){
 
 template<typename T, bool (*comp)(T, T)>
 void Heap<T, comp>::downheap(size_t &index_movido) {
-    size_t posicion_hijo_izq = obtener_posicion_hijo_izquierdo(index_movido);
-    size_t posicion_hijo_der = obtener_posicion_hijo_derecho(index_movido);
-    size_t posicion_mayor = obtener_posicion_dato_mayor(posicion_hijo_izq, posicion_hijo_der);
+    size_t indice_mayor = index_movido;
+    size_t indice_hijo_izq = 2*index_movido + 1;
+    size_t indice_hijo_der = 2*index_movido + 2;
     
-    if (posicion_mayor == POSICION_INVALIDA)
+    if ((indice_hijo_izq < tamanio() - 1) && (datos[indice_hijo_izq] > datos[indice_mayor]))
     {
-        return;
+        indice_mayor = indice_hijo_izq;
     }
-    if (datos[posicion_mayor] > datos[index_movido])
+
+    if ((indice_hijo_der < tamanio() - 1) && (datos[indice_hijo_der] > datos[indice_mayor]))
     {
-        swap(index_movido, posicion_mayor);
-        index_movido = posicion_mayor;
+        indice_mayor = indice_hijo_der;
+    }
+
+    if (indice_mayor != index_movido)
+    {
+        swap(index_movido, indice_mayor);
+        index_movido = indice_mayor;
         downheap(index_movido);
     }
-}
-
-template<typename T, bool (*comp)(T, T)>
-size_t Heap<T, comp>::obtener_posicion_hijo_derecho(size_t indice) {
-    if (2*indice + 2 > tamanio() - 1){
-        return POSICION_INVALIDA;
-    }
-    return 2*indice + 2;
-}
-
-template<typename T, bool (*comp)(T, T)>
-size_t Heap<T, comp>::obtener_posicion_hijo_izquierdo(size_t indice) {
-    if (2*indice + 1 > tamanio() - 1){
-        return POSICION_INVALIDA;
-    }
-    return 2*indice + 1;
-}
-
-template<class T, bool (*comp)(T, T)> 
-size_t Heap<T, comp>::obtener_posicion_dato_mayor(size_t indice_izq, size_t indice_der){
-    if (datos[indice_izq] > datos[indice_der])
-    {
-        return indice_izq;
-    }
-    return indice_der;
 }
 
 template<typename T, bool comp(T, T)>
