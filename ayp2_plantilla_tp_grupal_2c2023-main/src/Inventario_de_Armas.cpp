@@ -11,18 +11,19 @@ Inventario_de_Armas::Inventario_de_Armas(){
 
 void Inventario_de_Armas::consulta(){
     if (armas_rapidas.vacio()){
-        cout << "No hay armas! Solo te queda defenderte con tus propios puños.";
+        cout << "No hay mas armas! Solo te queda defenderte con tus propios puños."<<endl;
     }
     else{
         Arma arma_rapida;
         arma_rapida=armas_rapidas.primero();
-        cout << "Deseas equipar el " << arma_rapida <<"? (s/n)";
+        cout << "Deseas equipar el " << arma_rapida <<"? (s/n)"<<endl;
         std::string respuesta;
         getline (cin,respuesta);
         if (respuesta=="s")
             cambiar_arma();
     } 
 }
+
 void Inventario_de_Armas::cambiar_arma(){
     Arma guardada=arma_actual;
     arma_actual=armas_rapidas.baja();
@@ -30,7 +31,25 @@ void Inventario_de_Armas::cambiar_arma(){
         armas_rapidas.alta(guardada);
 }
 
+void Inventario_de_Armas::alta(){
+    std::string nombre; 
+    size_t potencia;
 
+    cout <<"Que arma deseas guardar?"<<endl;
+    getline(cin,nombre);
+    cout <<"Tu conocimiento de armas te permite estimar su pontencia..."<<endl;
+    cin.clear();
+    cin>>potencia;  // ojo, todavia no hay validacion de la potencia como size_t.
+    Arma nueva_arma(nombre,potencia);
+    cout << "Has recogido la " << nueva_arma <<endl;
+}
 
-
-
+void Inventario_de_Armas::baja(){
+    if (armas_rapidas.vacio()){
+        cout <<"No quedan mas armas que descartar!!"<<endl;
+    }
+    else{
+        Arma arma_descartada=armas_rapidas.baja();
+        cout <<"Has descartado el:"<<arma_descartada;
+    }
+}

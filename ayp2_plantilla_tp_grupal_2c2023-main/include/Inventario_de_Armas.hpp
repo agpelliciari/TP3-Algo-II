@@ -11,7 +11,7 @@ class Inventario_de_Armas
 private:
     Heap<Arma,Arma::mayor> armas_rapidas;
     Arma arma_actual;
-    bool ahorro_municion; //el flag indica si el inv. opera con mas/menos potencia de fuego.
+    bool ahorro_municion; //el flag indica si el inv. opera con la mayor/menor potencia de armas.
 
     //Pre:-
     //Post: Intercambia el arma actual por la de mayor/menor potencia del inventario, regresando el arma
