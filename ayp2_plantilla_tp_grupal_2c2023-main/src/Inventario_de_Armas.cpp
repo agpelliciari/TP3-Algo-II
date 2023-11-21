@@ -19,7 +19,7 @@ void Inventario_de_Armas::consulta(){
         cout << "Deseas equipar el " << arma_rapida <<"? (s/n)"<<endl;
         std::string respuesta;
         getline (cin,respuesta);
-        if (respuesta=="s")
+        if (respuesta=="s" || respuesta=="S")
             cambiar_arma();
     } 
 }
@@ -37,11 +37,18 @@ void Inventario_de_Armas::alta(){
 
     cout <<"Que arma deseas guardar?"<<endl;
     getline(cin,nombre);
+    cin.ignore();
     cout <<"Tu conocimiento de armas te permite estimar su pontencia..."<<endl;
-    cin.clear();
     cin>>potencia;  // ojo, todavia no hay validacion de la potencia como size_t.
     Arma nueva_arma(nombre,potencia);
-    cout << "Has recogido la " << nueva_arma <<endl;
+    armas_rapidas.alta(nueva_arma);
+    cout << "Has recogido la: " << nueva_arma <<endl;
+
+    if (ahorro_municion){
+        armas_rapidas.heapsort();  
+        //Si tengo el ahorro de municion activado, el nuevo alta rompe el vector ordenado.
+        //Asique lo vuelvo a ordenar de menor a mayor.
+    }  
 }
 
 void Inventario_de_Armas::baja(){
@@ -51,5 +58,37 @@ void Inventario_de_Armas::baja(){
     else{
         Arma arma_descartada=armas_rapidas.baja();
         cout <<"Has descartado el:"<<arma_descartada;
+        if (ahorro_municion){
+            armas_rapidas.heapsort();
+        }
+    }
+}
+void Inventario_de_Armas::activar_modo_ahorro(){
+    if (!armas_rapidas.vacio()){
+        if (!ahorro_municion){
+            ahorro_municion=true;
+            armas_rapidas.heapsort(); //aca reordeno de menor a mayor, para q ahora seleccione el peor arma primero.
+            cout <<"Ahorro de municion activado, equiparas las armas menos potentes primero."<<endl;
+        }
+        else
+            cout << "El ahorro de municion ya esta activado.";
+    }
+    else
+        cout <<"No hay armas que gestionar!!";
+}
+void Inventario_de_Armas::desactivar_modo_ahorro(){
+    if (!armas_rapidas.vacio()){
+        if (ahorro_municion){
+            ahorro_municion=false;
+            for (size_t i = (armas_rapidas.tamanio() / 2) - 1; i != SIZE_MAX; i--){
+                armas_rapidas.rearmar_heap(armas_rapidas.tamanio(),i);
+            }
+            cout<<"Ahorro de municion desactivado, hora de la artilleria pesada."<<endl;
+        }
+        else
+            cout<<"El modo ahorro no esta activo!."<<endl;
+    }
+    else{
+        cout <<"No hay armas que gestionar!!";
     }
 }
