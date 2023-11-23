@@ -100,12 +100,12 @@ void Heap<T, comp>::rearmar_heap(size_t tamanio_logico, size_t indice){
     size_t indice_hijo_izq = 2*indice + 1;
     size_t indice_hijo_der = 2*indice + 2;
     
-    if (indice_hijo_izq < tamanio_logico && datos[indice_hijo_izq] > datos[indice_mayor])
+    if (indice_hijo_izq < tamanio_logico && comp(datos[indice_hijo_izq], datos[indice_mayor]))
     {
         indice_mayor = indice_hijo_izq;
     }
 
-    if (indice_hijo_der < tamanio_logico && datos[indice_hijo_der] > datos[indice_mayor])
+    if (indice_hijo_der < tamanio_logico && comp(datos[indice_hijo_der], datos[indice_mayor]))
     {
         indice_mayor = indice_hijo_der;
     }
@@ -125,7 +125,7 @@ void Heap<T, comp>::alta(T dato){
     {
         size_t posicion_nuevo_elemento = tamanio() - 1;
         size_t posicion_padre_nuevo_elemento = obtener_posicion_padre(posicion_nuevo_elemento);
-        while ((datos[posicion_nuevo_elemento] > datos[posicion_padre_nuevo_elemento]) && (posicion_padre_nuevo_elemento != POSICION_INVALIDA) ){
+        while (comp(datos[posicion_nuevo_elemento], datos[posicion_padre_nuevo_elemento]) && (posicion_padre_nuevo_elemento != POSICION_INVALIDA) ){
             upheap(posicion_nuevo_elemento, posicion_padre_nuevo_elemento);
             posicion_nuevo_elemento = posicion_padre_nuevo_elemento;
             posicion_padre_nuevo_elemento = obtener_posicion_padre(posicion_nuevo_elemento);
@@ -194,12 +194,12 @@ void Heap<T, comp>::downheap(size_t &index_movido) {
     size_t indice_hijo_izq = 2*index_movido + 1;
     size_t indice_hijo_der = 2*index_movido + 2;
     
-    if ((indice_hijo_izq < tamanio() - 1) && (datos[indice_hijo_izq] > datos[indice_mayor]))
+    if (indice_hijo_izq < tamanio() - 1 && comp(datos[indice_hijo_izq], datos[indice_mayor]))
     {
         indice_mayor = indice_hijo_izq;
     }
 
-    if ((indice_hijo_der < tamanio() - 1) && (datos[indice_hijo_der] > datos[indice_mayor]))
+    if (indice_hijo_der < tamanio() - 1 && comp(datos[indice_hijo_der], datos[indice_mayor]))
     {
         indice_mayor = indice_hijo_der;
     }
