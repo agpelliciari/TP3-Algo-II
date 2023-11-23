@@ -31,24 +31,38 @@ void Inventario_de_Armas::cambiar_arma(){
         armas_rapidas.alta(guardada);
 }
 
-void Inventario_de_Armas::alta(){
+void Inventario_de_Armas::alta() {
     std::string nombre; 
     size_t potencia;
 
-    cout <<"Que arma deseas guardar?"<<endl;
-    getline(cin,nombre);
+    cout << "Que arma deseas guardar?" << endl;
     cin.ignore();
-    cout <<"Tu conocimiento de armas te permite estimar su pontencia..."<<endl;
-    cin>>potencia;  // ojo, todavia no hay validacion de la potencia como size_t.
-    Arma nueva_arma(nombre,potencia);
-    armas_rapidas.alta(nueva_arma);
-    cout << "Has recogido la: " << nueva_arma <<endl;
+    getline(cin, nombre);
+    cout << "Tu conocimiento de armas te permite estimar su potencia." << endl;
+    std::string input;
+    bool entradaValida = false;
+    do {
+        std::getline(std::cin, input);
+        std::istringstream stream(input);
+        if (stream >> potencia) {
+            char caracter;
+            if (!(stream >> caracter)) {
+                entradaValida = true;
+            } else {
+                std::cout << "Ingresa un valor numérico válido." << std::endl;
+            }
+        } else {
+            std::cout << "Ingresa un valor numérico válido." << std::endl;
+        }
+    } while (!entradaValida);
 
-    if (ahorro_municion){
-        armas_rapidas.heapsort();  
-        //Si tengo el ahorro de municion activado, el nuevo alta rompe el vector ordenado.
-        //Asique lo vuelvo a ordenar de menor a mayor.
-    }  
+    Arma nueva_arma(nombre, potencia);
+    cout << "Objeto recogido!" << endl;
+    armas_rapidas.alta(nueva_arma);
+
+    if (ahorro_municion) {          //Esto es para q se reorganice usando modo ahorro.
+        armas_rapidas.heapsort();
+    }
 }
 
 void Inventario_de_Armas::baja(){
