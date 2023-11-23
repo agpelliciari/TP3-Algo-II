@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <exception>
-
+#include <iostream>
 #define POSICION_INVALIDA (size_t)(-1)
 
 class Heap_exception : public std::exception {
@@ -87,9 +87,9 @@ Heap<T, comp>::Heap(){
 
 template<class T, bool (*comp)(T, T)>
 void Heap<T, comp>::heapsort(){
-    for (size_t i = tamanio() - 1; i > 0; i--)
+    for (size_t i = tamanio() - 1; i > 0; i--) //aca hay bug? 
     {
-        swap(0, i);
+        swap(0, i);  //el 0 representa la raiz, la i es el ultimo elemento.
         rearmar_heap(i, 0);
     }
 }
