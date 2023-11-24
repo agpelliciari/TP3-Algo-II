@@ -12,25 +12,34 @@ void Arbol_de_placas::alta_placa(Placa* puntero_placa) {
 
 void Arbol_de_placas::consulta_placa(Placa* puntero_placa) {
 
-    bool se_encontro = this->arbol_placas.consulta(puntero_placa);
-
-    if (se_encontro) {
+    if (arbol_placas.vacio())
+    {
+        cout << "El arbol de placas se encuentra vacio, ingrese una para poder utilizar esta funcion." << endl;
+    }
+    else
+    {
+       bool se_encontro = this->arbol_placas.consulta(puntero_placa);
+       if (se_encontro) {
         cout << "Esta placa ya fue recogida" << endl;
-    }
-    else {
+        }
+       else {
         cout << "Esta placa aun no fue recogida" << endl;
+        } 
     }
-
 }
 
-void Arbol_de_placas::baja_placa(int id_placa){
+void Arbol_de_placas::baja_placa(Placa* puntero_placa){
 
-    Placa* placa_a_eliminar = new Placa("vacio", "vacio", id_placa);
+    if (arbol_placas.vacio())
+    {
+        cout << "El arbol de placas se encuentra vacio, ingrese una para poder utilizar esta funcion." << endl;
+    }
+    else
+    {
+       arbol_placas.baja(puntero_placa);
 
-    arbol_placas.baja(placa_a_eliminar);
-
-    Placa::liberar(placa_a_eliminar);
-
+       Placa::liberar(puntero_placa); 
+    }
 }
 
 void Arbol_de_placas::mostrar_mensaje_descifrado(){
@@ -47,5 +56,15 @@ void Arbol_de_placas::mostrar_mensaje_descifrado(){
     }
 }
 
-Arbol_de_placas::~Arbol_de_placas() {
+int Arbol_de_placas::altura_arbol_placas(){
+    return arbol_placas.altura_maxima();
+}
+
+Arbol_de_placas::~Arbol_de_placas(){
+    std::vector<Placa*> elementos_arbol = arbol_placas.ancho();
+    for (size_t i = 0; i < arbol_placas.tamanio(); i++)
+    {
+        Placa* puntero_placa = elementos_arbol[i];
+        Placa::liberar(puntero_placa);
+    }
 }

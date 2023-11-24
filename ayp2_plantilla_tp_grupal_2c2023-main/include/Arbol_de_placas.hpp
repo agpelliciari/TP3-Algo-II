@@ -23,11 +23,15 @@ public:
 
     // Pre: El arbol no puede estar vacio.
     // Post: Se elimina la placa del arbol, si se encuentra.
-    void baja_placa(int id_placa);
+    void baja_placa(Placa* puntero_placa);
 
     // Pre: El arbol no puede estar vacio.
     // Post: Imprime un mensaje por pantalla si se encuentra la placa buscada o no.
     void consulta_placa(Placa* puntero_placa);
+    
+    // Pre: - .
+    // Post: Devuelve la altura del arbol.
+    int altura_arbol_placas();
     
     // Pre: -.
     // Post: Imprime por pantalla el orden del mensaje cargado en el arbol.
