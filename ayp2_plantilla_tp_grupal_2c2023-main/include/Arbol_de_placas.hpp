@@ -27,7 +27,7 @@ public:
 
     // Pre: El arbol no puede estar vacio.
     // Post: Imprime un mensaje por pantalla si se encuentra la placa buscada o no.
-    void consulta_placa(int id_placa);
+    void consulta_placa(Placa* puntero_placa);
     
     // Pre: -.
     // Post: Imprime por pantalla el orden del mensaje cargado en el arbol.
