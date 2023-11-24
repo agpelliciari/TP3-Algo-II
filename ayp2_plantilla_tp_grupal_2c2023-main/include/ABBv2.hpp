@@ -64,6 +64,12 @@ private:
     // Post: Ejecuta el método/función en el subárbol.
     void ejecutar(void metodo(T), NodoABB<T, menor, igual>* nodo_actual);
 
+    // Pre: -
+    // Post: Devuelve la altura maxima del arbol.
+    int altura_maxima(NodoABB<T, menor, igual>* nodo_actual);
+    
+    // Pre: -
+    // Post: Libera la memoria reservada dentro del arbol.
     void liberar_memoria(NodoABB<T, menor, igual>* nodo_actual);
 
 public:
@@ -105,6 +111,10 @@ public:
     // algunas cosas, como liberar la memoria de los nodos de usar punteros
     // o imprimir por pantalla el contenido. Pueden usar cualquier recorrido.
     void ejecutar(void metodo(T));
+    
+    // Pre: -
+    // Post: Devuelve la altura maxima del arbol.
+    int altura_maxima();
 
     // Pre: -
     // Post: Devuelve la cantidad de datos en el árbol.
@@ -312,6 +322,33 @@ std::vector<T> ABB<T,menor,igual>::ancho(){
     }
 
     return datos;
+}
+
+template<class T, bool (*menor)(T, T), bool (*igual)(T, T)> 
+int ABB<T, menor, igual>::altura_maxima(NodoABB<T, menor, igual> *nodo_actual){
+    if (nodo_actual == nullptr)
+    {
+        return 0;
+    }
+    else
+    {
+        int altura_max_izquierda = altura_maxima(nodo_actual->hijo_izquierdo);
+        int altura_max_derecha = altura_maxima(nodo_actual->hijo_derecho);
+
+        if (altura_max_izquierda > altura_max_derecha)
+        {
+            return (altura_max_izquierda + 1);
+        }
+        else
+        {
+            return (altura_max_derecha + 1);
+        }
+    }
+}
+
+template<class T, bool (*menor)(T, T), bool (*igual)(T, T)> 
+int ABB<T, menor, igual>::altura_maxima(){
+    return altura_maxima(raiz);
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
