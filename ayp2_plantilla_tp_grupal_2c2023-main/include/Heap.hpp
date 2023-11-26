@@ -125,7 +125,7 @@ void Heap<T, comp>::alta(T dato){
     {
         size_t posicion_nuevo_elemento = tamanio() - 1;
         size_t posicion_padre_nuevo_elemento = obtener_posicion_padre(posicion_nuevo_elemento);
-        while (comp(datos[posicion_nuevo_elemento], datos[posicion_padre_nuevo_elemento]) && (posicion_padre_nuevo_elemento != POSICION_INVALIDA) ){
+        while ((posicion_padre_nuevo_elemento != POSICION_INVALIDA) && comp(datos[posicion_nuevo_elemento], datos[posicion_padre_nuevo_elemento])){
             upheap(posicion_nuevo_elemento, posicion_padre_nuevo_elemento);
             posicion_nuevo_elemento = posicion_padre_nuevo_elemento;
             posicion_padre_nuevo_elemento = obtener_posicion_padre(posicion_nuevo_elemento);
