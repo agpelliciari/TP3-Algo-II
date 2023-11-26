@@ -33,11 +33,7 @@ public:
     //Pre:-
     //Post: Agrega objeto arma al inventario de armas rapidas.
     void alta();
-
-    //Pre: -
-    //Post: Quita el arma del inventario.
-    void baja();
-
+    
     //Pre:-
     //Post: Activa el ahorro de municion para q el inventario use el arma mas debil primero. ()
     void activar_modo_ahorro();
@@ -46,8 +42,6 @@ public:
     //Post: Desctiva el ahorro de municion para q el inventario use el arma mas fuerte primero.
     void desactivar_modo_ahorro();
 
-    //destructor
-    ~Inventario_de_Armas();
 };
 
 #endif

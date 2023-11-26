@@ -2,6 +2,7 @@
 #include "Arma.hpp"
 #include <iostream>
 #include <string>
+#include <sstream>
 using namespace std;
 
 Inventario_de_Armas::Inventario_de_Armas(){
