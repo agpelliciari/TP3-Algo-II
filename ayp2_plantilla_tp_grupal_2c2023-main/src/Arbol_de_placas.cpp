@@ -61,10 +61,12 @@ int Arbol_de_placas::altura_arbol_placas(){
 }
 
 Arbol_de_placas::~Arbol_de_placas(){
-    std::vector<Placa*> elementos_arbol = arbol_placas.ancho();
-    for (size_t i = 0; i < arbol_placas.tamanio(); i++)
+    if (!arbol_placas.vacio())
     {
-        Placa* puntero_placa = elementos_arbol[i];
-        Placa::liberar(puntero_placa);
+        std::vector<Placa*> elementos_arbol = arbol_placas.ancho();
+        for (size_t i = 0; i < arbol_placas.tamanio(); i++){
+            Placa* puntero_placa = elementos_arbol[i];
+            Placa::liberar(puntero_placa);
+        }
     }
 }

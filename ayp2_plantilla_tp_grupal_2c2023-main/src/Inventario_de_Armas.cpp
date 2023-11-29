@@ -1,9 +1,5 @@
 #include "Inventario_de_Armas.hpp"
 #include "Arma.hpp"
-#include <iostream>
-#include <string>
-#include <sstream>
-using namespace std;
 
 Inventario_de_Armas::Inventario_de_Armas(){
     this->ahorro_municion=false;
@@ -15,12 +11,13 @@ void Inventario_de_Armas::consulta(){
         cout << "No hay mas armas! Solo te queda defenderte con tus propios puños."<<endl;
     }
     else{
+        string respuesta;
         Arma arma_rapida;
         arma_rapida=armas_rapidas.primero();
         cout << "Deseas equipar el " << arma_rapida <<"? (s/n)"<<endl;
-        std::string respuesta;
-        getline (cin,respuesta);
-        if (respuesta=="s" || respuesta=="S")
+        cin >> respuesta;
+        transform(respuesta.begin(), respuesta.end(), respuesta.begin(), ::tolower);
+        if (respuesta.find(CONFIRMACION) != string::npos)
             cambiar_arma();
     } 
 }
@@ -37,8 +34,8 @@ void Inventario_de_Armas::alta() {
     size_t potencia;
 
     cout << "Que arma deseas guardar?" << endl;
+    cin >> nombre;
     cin.ignore();
-    getline(cin, nombre);
     cout << "Tu conocimiento de armas te permite estimar su potencia." << endl;
     std::string input;
     bool entradaValida = false;
@@ -107,3 +104,28 @@ void Inventario_de_Armas::desactivar_modo_ahorro(){
         cout <<"No hay armas que gestionar!!";
     }
 }
+
+bool Inventario_de_Armas::arma_equipada(){
+    return !(arma_actual ==  ARMA_DEFAULT);
+}
+
+void Inventario_de_Armas::desequipar_arma(){
+    if (!(arma_equipada())){
+        cout << "No tiene un arma equipada." << endl;
+        
+        string respuesta;
+        cout << "Deseas equipar una? (s/n)" << endl;
+        cin >> respuesta;
+        transform(respuesta.begin(), respuesta.end(), respuesta.begin(), ::tolower);
+		if (respuesta.find(CONFIRMACION) != string::npos){
+            consulta();
+        }
+    }
+    else
+    {
+        armas_rapidas.alta(arma_actual);
+        arma_actual = ARMA_DEFAULT;
+    }
+}
+
+Inventario_de_Armas::~Inventario_de_Armas(){}

@@ -4,7 +4,15 @@
 #include  "Arma.hpp"
 #include "Heap.hpp"
 
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+using namespace std;
+
 const Arma ARMA_DEFAULT("Puños",0);
+const string DESEQUIPAR = "desequipar";
+const string CONFIRMACION = "s";
 
 class Inventario_de_Armas
 {
@@ -41,6 +49,17 @@ public:
     //Pre:-
     //Post: Desctiva el ahorro de municion para q el inventario use el arma mas fuerte primero.
     void desactivar_modo_ahorro();
+    
+    //Pre:- .
+    //Post: Devuelve true si tiene un arma equipada.
+    bool arma_equipada();
+    
+    //Pre:- .
+    //Post: Vuelve a guardar el arma actual al inventario y se reemplaza por la default
+    void desequipar_arma();
+    
+    //Destructor
+    ~Inventario_de_Armas();
 
 };
 
