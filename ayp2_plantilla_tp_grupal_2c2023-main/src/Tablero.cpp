@@ -367,10 +367,12 @@ int Tablero::actualizar_posicion(int comando){
         pos_jugador=movimiento.first[movimiento.first.size()-1];
 
     bool es_peligrosa=false;
-    for (size_t i=0; i<peligrosas.size();i++)
+    size_t i=0;
+    while(!es_peligrosa && i<peligrosas.size()){
         if (pos_destino==peligrosas[i])
             es_peligrosa=true;
-
+    }
+    
     if (!es_peligrosa)
         return (movimiento.second);
     else
