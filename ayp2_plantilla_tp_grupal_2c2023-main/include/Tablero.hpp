@@ -4,10 +4,11 @@
 #include <string>
 #include "Grafo.hpp"
 
+const size_t TAMANIO_TABLERO = 4;
 const size_t CANT_CASILLEROS=81;
 const size_t ENTRADA=0;
 const size_t SALIDA=80;
-const size_t PESO_BASE=10;
+const int PESO_BASE=10;
 
 class Tablero {
 
@@ -16,12 +17,12 @@ private:
     size_t ENTRADA;
     size_t SALIDA;
     size_t pos_jugador;
-    std::vector<size_t> pos_pyramid;
+    std::vector<int> pos_pyramid;
     std::vector<size_t> paredes;
 
 //pre:-
 //pos: Desconecta la casilla del layout seteando las aristas a vertices adyacentes a infinito.
-void aislar_casilla(size_t casilla);
+void aislar_casilla(size_t posicion);
 
 //pre:-
 //pos: Conecta la casilla del layout seteando las aristas a vertices adyacentes a su peso base.
@@ -40,8 +41,10 @@ void crear_pyramid();
 void eliminar_pyramid();
 
 //pre:-
-//pos: Inicia el grafo conectando los vertices a traves de aristas de peso base. (GONZA, si le pifie editalo)
+//pos: Inicia el grafo conectando los vertices adyacentes a traves de aristas de peso base.
 void pre_tablero();
+
+bool es_posicion_pared(int posicion);
 
 public:
     //constructor
