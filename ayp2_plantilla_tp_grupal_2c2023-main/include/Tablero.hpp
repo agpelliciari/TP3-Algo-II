@@ -4,11 +4,13 @@
 #include <string>
 #include "Grafo.hpp"
 
+const size_t TAMANIO_TABLERO = 4;
 const size_t CANT_CASILLEROS=81;
 const size_t ENTRADA=0;
 const size_t SALIDA=80;
 const int PESO_BASE=10;
 const int FACTOR_RIESGO=5;
+const int PESO_BASE=10;
 
 class Tablero {
 
@@ -17,17 +19,20 @@ private:
     size_t pos_inicio;
     size_t pos_salida;
     size_t pos_jugador;
-    std::vector<size_t> pos_pyramid;
+    std::vector<int> pos_pyramid;
     std::vector<size_t> paredes;
     std::vector<size_t> peligrosas;
 
     //pre:-
     //pos: Desconecta la casilla del layout seteando las aristas a vertices adyacentes a infinito.
     void aislar_casilla(size_t casilla);
+//pre:-
+//pos: Desconecta la casilla del layout seteando las aristas a vertices adyacentes a infinito.
+void aislar_casilla(size_t posicion);
 
     //pre:-
     //pos: Conecta la casilla del layout seteando las aristas a vertices adyacentes a su peso base.
-    void conectar_casilla(size_t casilla); //Hablar el domingo con marian para generalizar el metodo, y permita especificar el peso.
+    void conectar_casilla(size_t casilla);
 
     //pre:-
     //pos: Conecta la casilla del layout seteando las aristas al peso especificado.
@@ -57,6 +62,25 @@ private:
     //pos: Inicia el grafo conectando los vertices a traves de aristas de peso base. (GONZA, si le pifie editalo)
     void pre_tablero();
 
+
+    //pre:-
+    //pos: Indica si el numero ingresado es par.
+    bool es_par(size_t numero);
+
+    //pre:-
+    //pos: Indica si la casilla ingresada esta en el borde derecho.
+    bool es_borde_derecho(size_t casilla);
+
+    //pre:-
+    //pos: Indica si la casilla ingresada esta en el borde izquierdo.
+    bool es_borde_izquierdo(size_t casilla);
+
+    //pre:-
+    //pos: Determina que vector de paredes debe asignarse al layout.
+    std::vector<size_t> elegir_paredes(bool es_par);
+
+    bool es_posicion_pared(int posicion);
+
 public:
     //constructor
     Tablero();
@@ -75,6 +99,8 @@ public:
 
     //Pre:-
     //Pos:Retorna un pair cuya "primer" componente es el vector de camino y la 2da el peso del mismo.
+    //pre:-
+    //pos: Determina que vector de paredes debe asignarse al layout.
     std::pair<std::vector<size_t>,int> camino_automatico();
 
 };
