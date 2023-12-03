@@ -8,11 +8,14 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <cstdlib>
+
 using namespace std;
 
 const Arma ARMA_DEFAULT("Puños",0);
 const string DESEQUIPAR = "desequipar";
 const string CONFIRMACION = "s";
+const int POTENCIA_MAX = 101;
 
 class Inventario_de_Armas
 {
@@ -57,6 +60,10 @@ public:
     //Pre:- .
     //Post: Vuelve a guardar el arma actual al inventario y se reemplaza por la default
     void desequipar_arma();
+
+    //Pre:-
+    //Post: Agrega un arma aleatoria al inventario.
+    void agregar_arma_aleatoria();
     
     //Destructor
     ~Inventario_de_Armas();

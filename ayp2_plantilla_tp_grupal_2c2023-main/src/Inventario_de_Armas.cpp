@@ -112,20 +112,24 @@ bool Inventario_de_Armas::arma_equipada(){
 void Inventario_de_Armas::desequipar_arma(){
     if (!(arma_equipada())){
         cout << "No tiene un arma equipada." << endl;
-        
-        string respuesta;
-        cout << "Deseas equipar una? (s/n)" << endl;
-        cin >> respuesta;
-        transform(respuesta.begin(), respuesta.end(), respuesta.begin(), ::tolower);
-		if (respuesta.find(CONFIRMACION) != string::npos){
-            consulta();
-        }
     }
     else
     {
         armas_rapidas.alta(arma_actual);
         arma_actual = ARMA_DEFAULT;
     }
+}
+
+void Inventario_de_Armas::agregar_arma_aleatoria(){
+    vector<string> vec_armas = {"Espada", "Arco", "Hacha", "Ballesta", "Daga", "Lanza", "Pistola", "Rifle", "Escopeta", "Subfusil", "Ametralladora"};
+    int indice_aleatorio = rand() % vec_armas.size();
+    string nombre_aleatorio = vec_armas[indice_aleatorio];
+
+    size_t potencia_aleatoria = rand() % POTENCIA_MAX;
+
+    Arma arma_aleatoria(nombre_aleatorio, potencia_aleatoria);
+    
+    armas_rapidas.alta(arma_aleatoria);
 }
 
 Inventario_de_Armas::~Inventario_de_Armas(){}

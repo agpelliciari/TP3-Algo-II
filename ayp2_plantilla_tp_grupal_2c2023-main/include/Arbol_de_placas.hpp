@@ -9,6 +9,9 @@ const std::string ACCION_ALTA = "alta";
 const std::string ACCION_BAJA = "baja";
 const std::string ACCION_CONSULTA = "consulta";
 
+const int RANGO_MAXIMO = 567;
+const int RANGO_MINIMO = 100;
+
 class Arbol_de_placas {
 private:
     ABB<Placa*, Placa::menor, Placa::igual> arbol_placas;
@@ -36,6 +39,10 @@ public:
     // Pre: -.
     // Post: Imprime por pantalla el orden del mensaje cargado en el arbol.
     void mostrar_mensaje_descifrado();
+    
+    //Pre:-
+    //Post: Agrega una placa aleatoria al arbol.
+    void agregar_placa_aleatoria();
 
     // Destructor.
     ~Arbol_de_placas();
