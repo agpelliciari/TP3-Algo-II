@@ -50,33 +50,7 @@ void Juego::nuevo_tablero(){
 }
 
 void Juego::inicializar_juego(){
-    string opcion, opcionValida;
-    do
-    {
-        menu_juego.imprimir_menu_principal();
-
-        if (partida_en_curso)
-        {
-            cout << "Existe una partida ya comenzada." << endl;
-        }
-    
-        opcionValida = menu_juego.recibir_opcion(opcion);
-
-        if (opcionValida == NUEVA_PARTIDA){
-            nueva_partida();
-        }
-
-        else if (opcionValida == CONTINUAR_PARTIDA){
-            if (partida_en_curso)
-            {
-                partida();
-            }
-            else
-            {
-                cout << "No se encuentran partidas, comienze una nueva." << endl;
-            }
-        }
-    } while (opcionValida != SALIR);
+    nueva_partida();
 }
 
 void Juego::partida(){
@@ -111,11 +85,11 @@ void Juego::partida(){
             imprimir_puntaje_total();
         }
 
-    } while ((opcionValida != VOLVER_MENU_PRINCIPAL) && (nivel <= ULTIMO_NIVEL) && (partida_en_curso));
+    } while ((opcionValida != SALIR) && (nivel <= ULTIMO_NIVEL) && (partida_en_curso));
 }
 
 void Juego::moverse_en_tablero(){
-    size_t costo_movimiento;
+    int costo_movimiento;
     string direccion;
 
     cout << "Para que direccion desea moverse? (W/A/S/D): " << endl;

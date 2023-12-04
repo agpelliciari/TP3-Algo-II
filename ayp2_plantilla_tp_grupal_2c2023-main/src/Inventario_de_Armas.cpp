@@ -122,7 +122,8 @@ void Inventario_de_Armas::desequipar_arma(){
 
 void Inventario_de_Armas::agregar_arma_aleatoria(){
     vector<string> vec_armas = {"Espada", "Arco", "Hacha", "Ballesta", "Daga", "Lanza", "Pistola", "Rifle", "Escopeta", "Subfusil", "Ametralladora"};
-    int indice_aleatorio = rand() % vec_armas.size();
+    srand(static_cast<unsigned int>(time(0)));
+    int indice_aleatorio = rand() % (static_cast<int>(vec_armas.size()));
     string nombre_aleatorio = vec_armas[indice_aleatorio];
 
     size_t potencia_aleatoria = rand() % POTENCIA_MAX;
