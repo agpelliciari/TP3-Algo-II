@@ -16,7 +16,7 @@ private:
 
     Inventario_de_Armas inventario;
     
-    size_t costo_total_movimientos;
+    int costo_total_movimientos;
 
     int nivel;
 
