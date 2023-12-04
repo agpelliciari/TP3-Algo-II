@@ -4,13 +4,12 @@
 #include <string>
 #include "Grafo.hpp"
 
-const size_t TAMANIO_TABLERO = 4;
+const size_t TAMANIO_TABLERO = 9;
 const size_t CANT_CASILLEROS=81;
 const size_t ENTRADA=0;
 const size_t SALIDA=80;
 const int PESO_BASE=10;
 const int FACTOR_RIESGO=5;
-const int PESO_BASE=10;
 
 class Tablero {
 
@@ -26,17 +25,10 @@ private:
     //pre:-
     //pos: Desconecta la casilla del layout seteando las aristas a vertices adyacentes a infinito.
     void aislar_casilla(size_t casilla);
-//pre:-
-//pos: Desconecta la casilla del layout seteando las aristas a vertices adyacentes a infinito.
-void aislar_casilla(size_t posicion);
 
     //pre:-
     //pos: Conecta la casilla del layout seteando las aristas a vertices adyacentes a su peso base.
-    void conectar_casilla(size_t casilla);
-
-    //pre:-
-    //pos: Conecta la casilla del layout seteando las aristas al peso especificado.
-    void conectar_casilla(size_t casilla,int peso);
+    void conectar_casilla(size_t casilla, int peso);
 
     //pre:-
     //pos: Incrementa el peso de las aristas adyacentes al vertice indicado, en un valor 5 veces el base. 
@@ -44,7 +36,7 @@ void aislar_casilla(size_t posicion);
     
     //pre: -
     //pos: Reconecta todo vertice peligroso con su PESO_BASE, deja vacio el vector peligrosas.
-    void Tablero::quitar_zona_peligrosa(size_t casilla);
+    void quitar_zona_peligrosa(size_t casilla);
 
     //pre:-
     //pos: Aisla las casillas "pared" en base a la altura del nivel del arbol de placas.
@@ -79,7 +71,13 @@ void aislar_casilla(size_t posicion);
     //pos: Determina que vector de paredes debe asignarse al layout.
     std::vector<size_t> elegir_paredes(bool es_par);
 
+    //pre:-
+    //pos: Devuelve true si la casilla es una pared, falso en caso contrario.
     bool es_posicion_pared(int posicion);
+
+    //pre:-
+    //pos: Conecta en ambas direcciones a las casillas ingresadas.
+    void conectar_casilleros(size_t casilla, size_t casilla_a_conectar,int peso);
 
 public:
     //constructor

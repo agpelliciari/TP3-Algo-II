@@ -4,53 +4,151 @@
 #include <iostream>
 
 
-void Tablero::conectar_casilla(size_t casilla) {
+void Tablero::conectar_casilla(size_t casilla, int peso) {
 
     //No incluyo entrada y salida ya que ni pyramid head ni las paredes pueden ser entradas validas a esta funcion.
 
-    size_t ESQUINA_SUPERIOR_IZQUIERDA = 72;
-    size_t ESQUINA_INFERIOR_DERECHA = 8;
+    size_t ESQUINA_SUPERIOR_IZQUIERDA = CANT_CASILLEROS-TAMANIO_TABLERO;
+    size_t ESQUINA_INFERIOR_DERECHA = CANT_CASILLEROS - 1 ;
 
-    if (casilla == ESQUINA_INFERIOR_DERECHA) {
+    size_t casilla_derecha = casilla+1;
+    size_t casilla_izquierda = casilla-1;
+    size_t casilla_arriba = casilla+TAMANIO_TABLERO;
+    size_t casilla_abajo = casilla-TAMANIO_TABLERO;
 
-        layout->cambiar_arista(casilla, casilla + 9, PESO_BASE);
-        layout->cambiar_arista(casilla, casilla - 1, PESO_BASE);
+    if( es_borde_derecho(casilla) ){ //BORDE DERECHO
 
-    }else if(casilla == ESQUINA_SUPERIOR_IZQUIERDA) {
+        if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
-        layout->cambiar_arista(casilla,casilla+1,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-9,PESO_BASE);
+            conectar_casilleros(casilla,casilla_izquierda,peso);
 
-    }else if (casilla <= 7 && casilla >=1){ //borde inferior
+        }
 
-        layout->cambiar_arista(casilla,casilla+1,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla+9,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-1,PESO_BASE);
+        if( !es_posicion_pared(int(casilla_abajo) ) ){
 
-    }else if(casilla <= 79 && casilla >= 73){ // borde superior
+            conectar_casilleros(casilla,casilla_abajo,peso);
 
-        layout->cambiar_arista(casilla,casilla+1,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-1,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-9,PESO_BASE);
+        }
 
-    }else if(es_borde_izquierdo(casilla)){
+        if( !es_posicion_pared(int(casilla_arriba) ) ){
 
-        layout->cambiar_arista(casilla,casilla+1,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla+9,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-9,PESO_BASE);
+            conectar_casilleros(casilla,casilla_arriba,peso);
 
-    }else if(es_borde_derecho(casilla)){
+        }
 
-        layout->cambiar_arista(casilla,casilla+9,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-1,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-9,PESO_BASE);
+    } else if(es_borde_izquierdo(casilla) ){ //BORDE IZQUIERDO
 
-    } else{ //No es ningun borde
+        if( !es_posicion_pared(int(casilla_derecha) ) ){
 
-        layout->cambiar_arista(casilla,casilla+1,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla+9,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-1,PESO_BASE);
-        layout->cambiar_arista(casilla,casilla-9,PESO_BASE);
+            conectar_casilleros(casilla,casilla_derecha,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_abajo) ) ){
+
+            conectar_casilleros(casilla,casilla_abajo,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_arriba) ) ){
+
+            conectar_casilleros(casilla,casilla_arriba,peso);
+
+        }
+
+    } else if(casilla == ESQUINA_SUPERIOR_IZQUIERDA){ //ESQUINA IZQUIERDA ARRIBA
+
+        if( !es_posicion_pared(int(casilla_derecha) ) ){
+
+            conectar_casilleros(casilla,casilla_derecha,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_abajo) ) ){
+
+            conectar_casilleros(casilla,casilla_abajo,peso);
+
+        }
+
+    } else if( casilla == ESQUINA_INFERIOR_DERECHA){ //ESQUINA DERECHA ABAJO
+
+        if( !es_posicion_pared(int(casilla_izquierda) ) ){
+
+            conectar_casilleros(casilla,casilla_izquierda,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_arriba) ) ){
+
+            conectar_casilleros(casilla,casilla_arriba,peso);
+
+        }
+
+    } else if( casilla >= 1 && casilla<= (TAMANIO_TABLERO-2) ){ //BORDE DE ABAJO
+
+        if( !es_posicion_pared(int(casilla_arriba) ) ){
+
+            conectar_casilleros(casilla,casilla_arriba,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_izquierda) ) ){
+
+            conectar_casilleros(casilla,casilla_izquierda,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_derecha) ) ){
+
+            conectar_casilleros(casilla,casilla_derecha,peso);
+
+        }
+
+    } else if (casilla >= (CANT_CASILLEROS-(TAMANIO_TABLERO-1)) && casilla <= (CANT_CASILLEROS-2)){ //BORDE SUPERIOR
+
+        if( !es_posicion_pared(int(casilla_izquierda) ) ){
+
+            conectar_casilleros(casilla,casilla_izquierda,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_derecha) ) ){
+
+            conectar_casilleros(casilla,casilla_derecha,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_abajo) ) ){
+
+            conectar_casilleros(casilla,casilla_abajo,peso);
+
+        }
+
+    } else{ //No es ningun caso borde
+
+        if( !es_posicion_pared(int(casilla_izquierda) ) ){
+
+            conectar_casilleros(casilla,casilla_izquierda,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_derecha) ) ){
+
+            conectar_casilleros(casilla,casilla_derecha,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_abajo) ) ){
+
+            conectar_casilleros(casilla,casilla_abajo,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_arriba) ) ){
+
+            conectar_casilleros(casilla,casilla_arriba,peso);
+
+        }
 
     }
 
@@ -94,9 +192,15 @@ std::vector<size_t> Tablero::elegir_paredes(bool es_par) {
 }
 
 bool Tablero::es_borde_derecho(size_t casilla) {
-
-    std::vector<size_t> borde_derecho = {17,26,35,44,53,62,71};
+    size_t acumulador = TAMANIO_TABLERO-1;
+    std::vector<size_t> borde_derecho;
     bool devolver = false;
+
+    for(size_t i = 0; i < TAMANIO_TABLERO-2;i++) {
+
+        borde_derecho.push_back(acumulador+TAMANIO_TABLERO);
+        acumulador+=TAMANIO_TABLERO;
+    }
 
     while (size_t i = 0 < borde_derecho.size() || devolver){
 
@@ -111,8 +215,16 @@ bool Tablero::es_borde_derecho(size_t casilla) {
 }
 
 bool Tablero::es_borde_izquierdo(size_t casilla) {
-    std::vector<size_t> borde_izquierdo = {9,18,27,36,45,54,63};
+
+    size_t acumulador = 0;
+    std::vector<size_t> borde_izquierdo;
     bool devolver = false;
+
+    for(size_t i = 0; i < TAMANIO_TABLERO-2;i++) {
+
+        borde_izquierdo.push_back(acumulador+TAMANIO_TABLERO);
+        acumulador+=TAMANIO_TABLERO;
+    }
 
     while (size_t i = 0 < borde_izquierdo.size() || devolver){
 
@@ -124,13 +236,13 @@ bool Tablero::es_borde_izquierdo(size_t casilla) {
 
     }
     return devolver;
+
 }
 
 Tablero::Tablero() {
     this->layout = new Grafo(CANT_CASILLEROS);
     this->pos_pyramid = {-1,-1};
 }
-
 
 void Tablero::pre_tablero() {
 
@@ -198,7 +310,6 @@ void Tablero::pre_tablero() {
     }
 }
 
-
 void Tablero::aislar_casilla(size_t posicion) {
 
     if (posicion < TAMANIO_TABLERO) {
@@ -242,7 +353,6 @@ void Tablero::aislar_casilla(size_t posicion) {
     }
 }
 
-
 bool Tablero::es_posicion_pared(int posicion) {
 
     bool es_pared = false;
@@ -255,7 +365,6 @@ bool Tablero::es_posicion_pared(int posicion) {
 
     return es_pared;
 }
-
 
 void Tablero::crear_pyramid() {
 
@@ -292,9 +401,6 @@ void Tablero::crear_pyramid() {
 
     }
 }
-void Tablero::conectar_casilla(size_t casilla,int peso) {
-    //PASS
-}
 
 void Tablero::iniciar_tablero(int altura){
     pre_tablero();  //genera el tablero bruto con todas las aristas base
@@ -325,12 +431,12 @@ void Tablero::quitar_zona_peligrosa(size_t casilla){
     
     const int DER=1; const int IZQ=-1; const int ARRIBA=9; const int ABAJO=-9;
 
-    conectar_casilla(casilla+DER);
+    /*/conectar_casilla(casilla+DER);
     conectar_casilla(casilla+IZQ);
     conectar_casilla(casilla+ARRIBA);
     conectar_casilla(casilla+ABAJO);  //casillas aledanias a piramid restituidas
 
-    conectar_casilla(casilla);  //reconecta a piramid
+    conectar_casilla(casilla);  //reconecta a piramid/*/
 }
 
 void Tablero::modificar_tablero(bool arma){
@@ -346,6 +452,7 @@ void Tablero::modificar_tablero(bool arma){
         }        
     }
 }
+
 int Tablero::actualizar_posicion(int comando){   
 
     /*No necesito verificar paredes o bordes. Si no se puede pasar, el camino sera un vector vacio.Pues: 
@@ -375,4 +482,9 @@ int Tablero::actualizar_posicion(int comando){
         return (movimiento.second);
     else
         return (movimiento.second-4*PESO_BASE);
+}
+
+void Tablero::conectar_casilleros(size_t casilla, size_t casilla_a_conectar, int peso) {
+    layout->cambiar_arista(casilla,casilla_a_conectar,peso);
+    layout->cambiar_arista(casilla_a_conectar,casilla,peso);
 }
