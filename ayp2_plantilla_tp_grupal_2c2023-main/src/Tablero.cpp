@@ -368,23 +368,23 @@ bool Tablero::es_posicion_pared(int posicion) {
 
 void Tablero::crear_pyramid() {
 
-    srand(time(0));
+    srand(static_cast<unsigned int>(time(0)));
 
     int primer_numero_aleatorio = 1 + (rand() % 2) ;
     int segundo_numero_aleatorio = 1 + (rand() % 2) ;
     
     if (primer_numero_aleatorio == 1) {
-        int posicion_primer_pyramid = 1 + rand() % (CANT_CASILLEROS-1) ;
+        int posicion_primer_pyramid = 1 + static_cast<int>(rand() % (CANT_CASILLEROS-1));
         while (es_posicion_pared(posicion_primer_pyramid)) {
-            posicion_primer_pyramid = 1 + rand() % (CANT_CASILLEROS-1) ;
+            posicion_primer_pyramid = 1 + static_cast<int>(rand() % (CANT_CASILLEROS-1));
         }
         pos_pyramid[0] = posicion_primer_pyramid;
     }
 
     if (segundo_numero_aleatorio == 1) {
-        int posicion_segundo_pyramid = 1 + rand() % (CANT_CASILLEROS-1) ;
+        int posicion_segundo_pyramid = 1 + static_cast<int>(rand() % (CANT_CASILLEROS-1));
         while ((es_posicion_pared(posicion_segundo_pyramid)) || (posicion_segundo_pyramid == pos_pyramid[0])) {
-            posicion_segundo_pyramid = 1 + rand() % (CANT_CASILLEROS-1) ;
+            posicion_segundo_pyramid = 1 + static_cast<int>(rand() % (CANT_CASILLEROS-1));
         }
         pos_pyramid[1] = posicion_segundo_pyramid;
     }
@@ -431,12 +431,12 @@ void Tablero::quitar_zona_peligrosa(size_t casilla){
     
     const int DER=1; const int IZQ=-1; const int ARRIBA=9; const int ABAJO=-9;
 
-    /*/conectar_casilla(casilla+DER);
-    conectar_casilla(casilla+IZQ);
-    conectar_casilla(casilla+ARRIBA);
-    conectar_casilla(casilla+ABAJO);  //casillas aledanias a piramid restituidas
+    conectar_casilla(casilla+DER, PESO_BASE);
+    conectar_casilla(casilla+IZQ, PESO_BASE);
+    conectar_casilla(casilla+ARRIBA, PESO_BASE);
+    conectar_casilla(casilla+ABAJO, PESO_BASE);  //casillas aledanias a piramid restituidas
 
-    conectar_casilla(casilla);  //reconecta a piramid/*/
+    conectar_casilla(casilla, PESO_BASE);  //reconecta a piramid/*/
 }
 
 void Tablero::modificar_tablero(bool arma){
