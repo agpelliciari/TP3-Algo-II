@@ -7,18 +7,13 @@
 
 using namespace std;
 
-// Constantes de opciones del Menu principal
-const string NUEVA_PARTIDA = "1";
-const string CONTINUAR_PARTIDA = "2";
-const string SALIR = "3";
-
 // Constantes de opciones del Menu del juego
 const string MOVERSE_EN_EL_TABLERO = "1";
 const string MOSTRAR_CAMINO_MINIMO = "2";
 const string USAR_CAMINO_MINIMO = "3";
 const string EQUIPAR_DESEQUIPAR_ARMA = "4";
 const string MOSTRAR_PUNTAJE = "5";
-const string VOLVER_MENU_PRINCIPAL = "6";
+const string SALIR = "6";
 
 // Constantes de niveles del juego
 const int PRIMER_NIVEL = 1;
