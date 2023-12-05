@@ -9,11 +9,9 @@ Juego::Juego(){
 void Juego::condiciones_iniciales(){
     nivel = PRIMER_NIVEL;
     partida_en_curso = true;
-    
-    for (size_t i = 0; i < 2; i++)
-    {
-        generar_arma_aleatoria();
-    }
+
+    generar_arma_aleatoria();
+
 }
 
 void Juego::nueva_partida(){

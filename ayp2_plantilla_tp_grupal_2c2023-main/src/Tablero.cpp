@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-void Tablero::conectar_casilla(size_t casilla, int peso) {
+void Tablero::conectar_casilla(size_t casilla, int peso, bool bidireccional) {
 
     size_t ESQUINA_SUPERIOR_IZQUIERDA = CANT_CASILLEROS-TAMANIO_TABLERO;
     size_t ESQUINA_INFERIOR_DERECHA = TAMANIO_TABLERO- 1 ;
@@ -18,19 +18,19 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
-            conectar_casilleros(casilla,casilla_izquierda,peso);
+            conectar_casilleros(casilla,casilla_izquierda,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_abajo) ) ){
 
-            conectar_casilleros(casilla,casilla_abajo,peso);
+            conectar_casilleros(casilla,casilla_abajo,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_arriba) ) ){
 
-            conectar_casilleros(casilla,casilla_arriba,peso);
+            conectar_casilleros(casilla,casilla_arriba,peso, bidireccional);
 
         }
 
@@ -38,19 +38,19 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         if( !es_posicion_pared(int(casilla_derecha) ) ){
 
-            conectar_casilleros(casilla,casilla_derecha,peso);
+            conectar_casilleros(casilla,casilla_derecha,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_abajo) ) ){
 
-            conectar_casilleros(casilla,casilla_abajo,peso);
+            conectar_casilleros(casilla,casilla_abajo,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_arriba) ) ){
 
-            conectar_casilleros(casilla,casilla_arriba,peso);
+            conectar_casilleros(casilla,casilla_arriba,peso, bidireccional);
 
         }
 
@@ -58,13 +58,13 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         if( !es_posicion_pared(int(casilla_derecha) ) ){
 
-            conectar_casilleros(casilla,casilla_derecha,peso);
+            conectar_casilleros(casilla,casilla_derecha,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_abajo) ) ){
 
-            conectar_casilleros(casilla,casilla_abajo,peso);
+            conectar_casilleros(casilla,casilla_abajo,peso, bidireccional);
 
         }
 
@@ -72,13 +72,13 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
-            conectar_casilleros(casilla,casilla_izquierda,peso);
+            conectar_casilleros(casilla,casilla_izquierda,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_arriba) ) ){
 
-            conectar_casilleros(casilla,casilla_arriba,peso);
+            conectar_casilleros(casilla,casilla_arriba,peso, bidireccional);
 
         }
 
@@ -86,19 +86,19 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
         
         if( !es_posicion_pared(int(casilla_arriba) ) ){
 
-            conectar_casilleros(casilla,casilla_arriba,peso);
+            conectar_casilleros(casilla,casilla_arriba,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
-            conectar_casilleros(casilla,casilla_izquierda,peso);
+            conectar_casilleros(casilla,casilla_izquierda,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_derecha) ) ){
 
-            conectar_casilleros(casilla,casilla_derecha,peso);
+            conectar_casilleros(casilla,casilla_derecha,peso, bidireccional);
 
         }
 
@@ -106,19 +106,19 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
         
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
-            conectar_casilleros(casilla,casilla_izquierda,peso);
+            conectar_casilleros(casilla,casilla_izquierda,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_derecha) ) ){
 
-            conectar_casilleros(casilla,casilla_derecha,peso);
+            conectar_casilleros(casilla,casilla_derecha,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_abajo) ) ){
 
-            conectar_casilleros(casilla,casilla_abajo,peso);
+            conectar_casilleros(casilla,casilla_abajo,peso, bidireccional);
 
         }
 
@@ -126,13 +126,13 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         if( !es_posicion_pared(int(casilla_abajo) ) ){
 
-            conectar_casilleros(casilla,casilla_abajo,peso);
+            conectar_casilleros(casilla,casilla_abajo,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
-            conectar_casilleros(casilla,casilla_izquierda,peso);
+            conectar_casilleros(casilla,casilla_izquierda,peso, bidireccional);
 
         }
 
@@ -141,13 +141,13 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         if( !es_posicion_pared(int(casilla_arriba) ) ){
 
-            conectar_casilleros(casilla,casilla_arriba,peso);
+            conectar_casilleros(casilla,casilla_arriba,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_derecha) ) ){
 
-            conectar_casilleros(casilla,casilla_derecha,peso);
+            conectar_casilleros(casilla,casilla_derecha,peso, bidireccional);
 
         }
 
@@ -155,25 +155,25 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
-            conectar_casilleros(casilla,casilla_izquierda,peso);
+            conectar_casilleros(casilla,casilla_izquierda,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_derecha) ) ){
 
-            conectar_casilleros(casilla,casilla_derecha,peso);
+            conectar_casilleros(casilla,casilla_derecha,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_abajo) ) ){
 
-            conectar_casilleros(casilla,casilla_abajo,peso);
+            conectar_casilleros(casilla,casilla_abajo,peso, bidireccional);
 
         }
 
         if( !es_posicion_pared(int(casilla_arriba) ) ){
 
-            conectar_casilleros(casilla,casilla_arriba,peso);
+            conectar_casilleros(casilla,casilla_arriba,peso, bidireccional);
 
         }
 
@@ -427,13 +427,13 @@ void Tablero::crear_pyramid() {
 
     if (pos_pyramid[0] != (-1)) {
 
-        aislar_casilla((size_t) pos_pyramid[0]);
+        zona_peligrosa((size_t) pos_pyramid[0]);
 
     }
 
     if (pos_pyramid[1] != (-1)) {
 
-        aislar_casilla((size_t) pos_pyramid[1]);
+        zona_peligrosa((size_t) pos_pyramid[1]);
 
     }
 }
@@ -451,51 +451,32 @@ void Tablero::zona_peligrosa(size_t casilla){
     //Luego aislo a pyramid.
 
     if (!es_posicion_pared(static_cast<int>(casilla+DER))){   //Casilla Derecha a pyramid
-        conectar_casilla(casilla+DER,FACTOR_RIESGO*PESO_BASE);
+
+        conectar_casilla(casilla+DER,FACTOR_RIESGO*PESO_BASE, true);
+        conectar_casilla((casilla+DER),PESO_BASE, false);
         peligrosas.push_back(casilla+DER);
-        //Arista unidireccional desde la casilla peligrosa derecha hacia sus adyacentes
-        if(!es_posicion_pared(static_cast<int>(casilla+DER)+DER))
-            layout->cambiar_arista(casilla+DER,(casilla+DER)+DER,PESO_BASE);
-        if(!es_posicion_pared(static_cast<int>(casilla+DER)+ARRIBA))
-            layout->cambiar_arista(casilla+DER,(casilla+DER)+ARRIBA,PESO_BASE);
-        if(!es_posicion_pared(static_cast<int>(casilla+DER)+ABAJO))
-            layout->cambiar_arista(casilla+DER,(casilla+DER)+ABAJO,PESO_BASE);    
+
     }
 
     if (!es_posicion_pared(static_cast<int>(casilla+IZQ))){ //Casilla Izq a pyramid
-        conectar_casilla(casilla+IZQ,FACTOR_RIESGO*PESO_BASE);
+        conectar_casilla(casilla+IZQ,FACTOR_RIESGO*PESO_BASE, true);
+        conectar_casilla((casilla+IZQ),PESO_BASE, false);
         peligrosas.push_back(casilla+IZQ);
-        //Arista unidireccional desde la casilla peligrosa Izquierda hacia sus adyacentes
-        if (!es_posicion_pared(static_cast<int>(casilla+IZQ+IZQ)))
-            layout->cambiar_arista(casilla+IZQ,(casilla+IZQ)+IZQ,PESO_BASE);
-        if (!es_posicion_pared(static_cast<int>(casilla+IZQ+ARRIBA)))
-            layout->cambiar_arista(casilla+IZQ,(casilla+IZQ)+ARRIBA,PESO_BASE);
-        if (!es_posicion_pared(static_cast<int>(casilla+IZQ+ABAJO)))
-            layout->cambiar_arista(casilla+IZQ,(casilla+IZQ)+ABAJO,PESO_BASE);
+
     }
 
     if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA))){ //Casilla arriba a pyramid
-        conectar_casilla(casilla+ARRIBA,FACTOR_RIESGO*PESO_BASE);
+        conectar_casilla(casilla+ARRIBA,FACTOR_RIESGO*PESO_BASE, true);
+        conectar_casilla((casilla+ARRIBA),PESO_BASE, false);
         peligrosas.push_back(casilla+ARRIBA);
-        //Arista unidireccional desde la casilla peligrosa de arriba hacia sus adyacentes
-        if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA+DER)))
-            layout->cambiar_arista(casilla+ARRIBA,(casilla+ARRIBA)+DER,PESO_BASE);
-        if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA+IZQ)))
-            layout->cambiar_arista(casilla+ARRIBA,(casilla+ARRIBA)+IZQ,PESO_BASE);
-        if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA+ARRIBA)))
-            layout->cambiar_arista(casilla+ARRIBA,(casilla+ARRIBA)+ARRIBA,PESO_BASE);
+
     }
 
     if (!es_posicion_pared(static_cast<int>(casilla+ABAJO))){ //Casilla abajo a pyramid
-        conectar_casilla(casilla+ABAJO,FACTOR_RIESGO*PESO_BASE);
+        conectar_casilla(casilla+ABAJO,FACTOR_RIESGO*PESO_BASE, true);
+        conectar_casilla((casilla+ABAJO),PESO_BASE, false);
         peligrosas.push_back(casilla+ABAJO);    
-        //Arista unidireccional desde la casilla peligrosa de abajo hacia sus adyacentes
-        if (!es_posicion_pared(static_cast<int>(casilla+ABAJO+DER)))
-            layout->cambiar_arista(casilla+ABAJO,(casilla+ABAJO)+DER,PESO_BASE);
-        if (!es_posicion_pared(static_cast<int>(casilla+ABAJO+IZQ)))
-            layout->cambiar_arista(casilla+ABAJO,(casilla+ABAJO)+IZQ,PESO_BASE);
-        if (!es_posicion_pared(static_cast<int>(casilla+ABAJO+ABAJO)))
-            layout->cambiar_arista(casilla+ABAJO,(casilla+ABAJO)+ABAJO,PESO_BASE);
+
     }   
     aislar_casilla(casilla);    //desconecto a pyramid del resto de casillas.
 }
@@ -504,12 +485,12 @@ void Tablero::quitar_zona_peligrosa(size_t casilla){
     
     const int DER=1; const int IZQ=-1; const int ARRIBA=9; const int ABAJO=-9;
 
-    conectar_casilla(casilla+DER, PESO_BASE);
-    conectar_casilla(casilla+IZQ, PESO_BASE);
-    conectar_casilla(casilla+ARRIBA, PESO_BASE);
-    conectar_casilla(casilla+ABAJO, PESO_BASE);  //casillas adyacentes a piramid restituidas
+    conectar_casilla(casilla+DER, PESO_BASE, true);
+    conectar_casilla(casilla+IZQ, PESO_BASE, true);
+    conectar_casilla(casilla+ARRIBA, PESO_BASE, true);
+    conectar_casilla(casilla+ABAJO, PESO_BASE, true);  //casillas adyacentes a piramid restituidas
 
-    conectar_casilla(casilla, PESO_BASE);  //reconecta a piramid/*/
+    conectar_casilla(casilla, PESO_BASE, true);  //reconecta a piramid/*/
 }
 
 void Tablero::modificar_tablero(bool arma){
@@ -559,9 +540,17 @@ int Tablero::actualizar_posicion(int comando){
         return (movimiento.second-4*PESO_BASE);
 }
 
-void Tablero::conectar_casilleros(size_t casilla, size_t casilla_a_conectar, int peso) {
-    layout->cambiar_arista(casilla,casilla_a_conectar,peso);
-    layout->cambiar_arista(casilla_a_conectar,casilla,peso);
+void Tablero::conectar_casilleros(size_t casilla, size_t casilla_a_conectar, int peso, bool bidireccional) {
+    if(bidireccional){
+
+        layout->cambiar_arista(casilla,casilla_a_conectar,peso);
+        layout->cambiar_arista(casilla_a_conectar,casilla,peso);
+
+    } else{
+
+        layout->cambiar_arista(casilla,casilla_a_conectar,peso);
+
+    }
 }
 
 void Tablero::restaurar_atributos() {
@@ -578,8 +567,8 @@ bool Tablero::es_posicion_final() {
 
 bool Tablero::es_posicion_pyramid() {
     bool devolver = false;
-
-    while(size_t i = 0 < pos_pyramid.size() && !devolver){
+    size_t i = 0;
+    while( i < pos_pyramid.size() && !devolver){
 
         if(pos_pyramid[i] == static_cast<int>(pos_jugador)){
 

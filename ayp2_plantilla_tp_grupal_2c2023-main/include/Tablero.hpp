@@ -28,7 +28,7 @@ private:
 
     //pre:-
     //pos: Conecta la casilla del layout seteando las aristas a vertices adyacentes a su peso base.
-    void conectar_casilla(size_t casilla, int peso);
+    void conectar_casilla(size_t casilla, int peso, bool bidireccional);
 
     //pre:-
     //pos: Incrementa el peso de las aristas adyacentes al vertice indicado, en un valor 5 veces el base. 
@@ -77,7 +77,7 @@ private:
 
     //pre:-
     //pos: Conecta en ambas direcciones a las casillas ingresadas.
-    void conectar_casilleros(size_t casilla, size_t casilla_a_conectar,int peso);
+    void conectar_casilleros(size_t casilla, size_t casilla_a_conectar,int peso, bool bidireccion);
 
     //pre:-
     //pos: Restaura todos los atributos del tablero.
