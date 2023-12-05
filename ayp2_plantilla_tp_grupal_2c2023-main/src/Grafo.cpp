@@ -104,6 +104,31 @@ Grafo& Grafo::operator=(const Grafo& grafo1) {
     return *this;
 }
 
+void Grafo::mostrarMatrizAdyacencia() {
+    std::cout << "\nMatriz de adyacencia: \n\n" << std::endl;
+    for(size_t i = 0; i < vertices; i++){
+        for(size_t j = 0; j < vertices*2; j++) {
+            if(j == vertices * 2 - 1){
+                std::cout << std::endl;
+            } else if(j % 2 == 0){
+                if(matriz_adyacencia.elemento(i, j/2) == INFINITO){
+                    std::cout << " i";   // ∞
+                }
+                else if (matriz_adyacencia.elemento(i, j/2) == 0) {
+                    std::cout << " ";
+                    std::cout << matriz_adyacencia.elemento(i, j/2);
+                }
+                else {
+                    std::cout << matriz_adyacencia.elemento(i, j/2);
+                }
+            } else{
+                std::cout << " | ";
+            }
+        }
+    }
+    std::cout << std::endl;
+}
+
 Grafo::~Grafo() {
     delete algoritmo_camino_minimo;
 }

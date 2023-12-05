@@ -107,6 +107,11 @@ public:
     //Pos:Retorna un pair cuya "primer" componente es el vector de camino y la 2da el peso del mismo.
     std::pair<std::vector<size_t>,int> camino_automatico();
 
+    bool es_zona_peligrosa(size_t casilla);
+
+    bool es_borde_superior(size_t casilla);
+
+    bool es_borde_inferior(size_t casilla);
 };
 
 #endif

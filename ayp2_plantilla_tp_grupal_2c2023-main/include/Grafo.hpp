@@ -58,6 +58,8 @@ public:
     Grafo& operator=(const Grafo& grafo1);
 
     ~Grafo();
+
+    void mostrarMatrizAdyacencia();
 };
 
 #endif

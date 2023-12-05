@@ -109,7 +109,7 @@ void Juego::moverse_en_tablero(){
     else if (direccion == DERECHA) {
         costo_movimiento = tablero_juego.actualizar_posicion(MOVERSE_DERECHA);
     }
-        
+
     costo_total_movimientos += costo_movimiento;
 
     if (tablero_juego.es_posicion_final())
@@ -125,7 +125,7 @@ void Juego::moverse_en_tablero(){
         }
     }
 
-    if (tablero_juego.es_posicion_pyramid())
+   if (tablero_juego.es_posicion_pyramid())
     {
         romper_arma();
     }
