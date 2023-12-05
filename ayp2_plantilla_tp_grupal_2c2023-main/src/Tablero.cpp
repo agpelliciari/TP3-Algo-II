@@ -543,7 +543,7 @@ bool Tablero::es_posicion_pyramid() {
 
     while(size_t i = 0 < pos_pyramid.size() && !devolver){
 
-        if(pos_pyramid[i] == pos_jugador){
+        if(pos_pyramid[i] == static_cast<int>(pos_jugador)){
 
             devolver = true;
 

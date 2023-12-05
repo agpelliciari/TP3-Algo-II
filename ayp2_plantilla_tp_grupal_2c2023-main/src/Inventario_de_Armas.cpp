@@ -131,6 +131,8 @@ void Inventario_de_Armas::agregar_arma_aleatoria(){
     Arma arma_aleatoria(nombre_aleatorio, potencia_aleatoria);
     
     armas_rapidas.alta(arma_aleatoria);
+
+    cout << "Ha obtenido una nueva arma: " << arma_aleatoria <<endl;
 }
 
 Inventario_de_Armas::~Inventario_de_Armas(){}

@@ -35,6 +35,10 @@ private:
     void generar_arma_aleatoria();
 
     // Pre: -.
+    // Post: Desequipa y elimina el arma actual.
+    void romper_arma();
+
+    // Pre: -.
     // Post: Inicializa un tablero.
     void nuevo_tablero();
     
