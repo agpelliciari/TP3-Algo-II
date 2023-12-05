@@ -16,8 +16,6 @@ add_executable(Google_Tests_run
         ../src/Dijkstra.cpp
         ../src/Floyd.cpp
         ../src/Matriz.cpp
-        ../include/Tablero.hpp
-        ../src/Tablero.cpp
 )
 
 target_link_libraries(Google_Tests_run gtest gtest_main)

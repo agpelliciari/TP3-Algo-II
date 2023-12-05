@@ -15,7 +15,7 @@ class Tablero {
 
 private:
     Grafo* layout;
-    size_t pos_inicio;
+    size_t pos_entrada;
     size_t pos_salida;
     size_t pos_jugador;
     std::vector<int> pos_pyramid;
@@ -79,6 +79,10 @@ private:
     //pos: Conecta en ambas direcciones a las casillas ingresadas.
     void conectar_casilleros(size_t casilla, size_t casilla_a_conectar,int peso);
 
+    //pre:-
+    //pos: Restaura todos los atributos del tablero.
+    void restaurar_atributos();
+
 public:
     //constructor
     Tablero();
@@ -95,10 +99,12 @@ public:
     //Pos: Actualiza las aristas de los pyramid en el layout en funcion de si el jugador tiene arma.
     void modificar_tablero(bool arma);
 
+    bool es_posicion_final();
+
+    bool es_posicion_pyramid();
+
     //Pre:-
     //Pos:Retorna un pair cuya "primer" componente es el vector de camino y la 2da el peso del mismo.
-    //pre:-
-    //pos: Determina que vector de paredes debe asignarse al layout.
     std::pair<std::vector<size_t>,int> camino_automatico();
 
 };

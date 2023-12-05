@@ -6,10 +6,8 @@
 
 void Tablero::conectar_casilla(size_t casilla, int peso) {
 
-    //No incluyo entrada y salida ya que ni pyramid head ni las paredes pueden ser entradas validas a esta funcion.
-
     size_t ESQUINA_SUPERIOR_IZQUIERDA = CANT_CASILLEROS-TAMANIO_TABLERO;
-    size_t ESQUINA_INFERIOR_DERECHA = CANT_CASILLEROS - 1 ;
+    size_t ESQUINA_INFERIOR_DERECHA = TAMANIO_TABLERO- 1 ;
 
     size_t casilla_derecha = casilla+1;
     size_t casilla_izquierda = casilla-1;
@@ -56,7 +54,7 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         }
 
-    } else if(casilla == ESQUINA_SUPERIOR_IZQUIERDA){ //ESQUINA IZQUIERDA ARRIBA
+    } else if(casilla == ESQUINA_SUPERIOR_IZQUIERDA){ //ESQUINA IZQUIERDA SUPERIOR
 
         if( !es_posicion_pared(int(casilla_derecha) ) ){
 
@@ -70,7 +68,7 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         }
 
-    } else if( casilla == ESQUINA_INFERIOR_DERECHA){ //ESQUINA DERECHA ABAJO
+    } else if( casilla == ESQUINA_INFERIOR_DERECHA){ //ESQUINA INFERIOR DERECHA
 
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
@@ -124,7 +122,36 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
 
         }
 
-    } else{ //No es ningun caso borde
+    } else if(casilla == SALIDA){ //CASILLA DE SALIDA
+
+        if( !es_posicion_pared(int(casilla_abajo) ) ){
+
+            conectar_casilleros(casilla,casilla_abajo,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_izquierda) ) ){
+
+            conectar_casilleros(casilla,casilla_izquierda,peso);
+
+        }
+
+
+    } else if(casilla == ENTRADA){ //CASILLA DE ENTRADA
+
+        if( !es_posicion_pared(int(casilla_arriba) ) ){
+
+            conectar_casilleros(casilla,casilla_arriba,peso);
+
+        }
+
+        if( !es_posicion_pared(int(casilla_derecha) ) ){
+
+            conectar_casilleros(casilla,casilla_derecha,peso);
+
+        }
+
+    }else{ //No es ningun caso borde
 
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
@@ -159,7 +186,9 @@ void Tablero::set_layout(int altura) {
     paredes = elegir_paredes(es_par(altura));
 
     for(size_t i = 0;i<paredes.size();i++){
-        aislar_casilla(i);
+
+        aislar_casilla(paredes[i]);
+
     }
 
 }
@@ -192,17 +221,19 @@ std::vector<size_t> Tablero::elegir_paredes(bool es_par) {
 }
 
 bool Tablero::es_borde_derecho(size_t casilla) {
-    size_t acumulador = TAMANIO_TABLERO-1;
+
+    size_t acumulador = TAMANIO_TABLERO - 1;
     std::vector<size_t> borde_derecho;
     bool devolver = false;
 
     for(size_t i = 0; i < TAMANIO_TABLERO-2;i++) {
 
-        borde_derecho.push_back(acumulador+TAMANIO_TABLERO);
+        borde_derecho.push_back(acumulador + TAMANIO_TABLERO);
         acumulador+=TAMANIO_TABLERO;
     }
 
-    while (size_t i = 0 < borde_derecho.size() || devolver){
+    size_t i = 0;
+    while (i < borde_derecho.size() && !devolver){
 
         if (casilla == borde_derecho[i]){
             devolver = true;
@@ -211,6 +242,7 @@ bool Tablero::es_borde_derecho(size_t casilla) {
         }
 
     }
+
     return devolver;
 }
 
@@ -226,7 +258,8 @@ bool Tablero::es_borde_izquierdo(size_t casilla) {
         acumulador+=TAMANIO_TABLERO;
     }
 
-    while (size_t i = 0 < borde_izquierdo.size() || devolver){
+    size_t i =0;
+    while ( i < borde_izquierdo.size() && !devolver){
 
         if (casilla == borde_izquierdo[i]){
             devolver = true;
@@ -242,6 +275,9 @@ bool Tablero::es_borde_izquierdo(size_t casilla) {
 Tablero::Tablero() {
     this->layout = new Grafo(CANT_CASILLEROS);
     this->pos_pyramid = {-1,-1};
+    this->pos_entrada = ENTRADA;
+    this->pos_salida = SALIDA;
+    this->pos_jugador = ENTRADA;
 }
 
 void Tablero::pre_tablero() {
@@ -404,8 +440,9 @@ void Tablero::crear_pyramid() {
 
 void Tablero::iniciar_tablero(int altura){
     pre_tablero();  //genera el tablero bruto con todas las aristas base
+    restaurar_atributos();
     set_layout(altura); //ubica paredes
-    crear_pyramid(); // ubica los enemigos en el tablero.
+    crear_pyramid();// ubica los enemigos en el tablero.
 }
 
 void Tablero::zona_peligrosa(size_t casilla){
@@ -489,4 +526,33 @@ int Tablero::actualizar_posicion(int comando){
 void Tablero::conectar_casilleros(size_t casilla, size_t casilla_a_conectar, int peso) {
     layout->cambiar_arista(casilla,casilla_a_conectar,peso);
     layout->cambiar_arista(casilla_a_conectar,casilla,peso);
+}
+
+void Tablero::restaurar_atributos() {
+
+    this->pos_pyramid = {-1,-1};
+    this->pos_jugador = ENTRADA;
+
+}
+
+bool Tablero::es_posicion_final() {
+
+    return pos_jugador == SALIDA;
+}
+
+bool Tablero::es_posicion_pyramid() {
+    bool devolver = false;
+
+    while(size_t i = 0 < pos_pyramid.size() && !devolver){
+
+        if(pos_pyramid[i] == static_cast<int>(pos_jugador)){
+
+            devolver = true;
+
+        }
+
+        i++;
+
+    }
+    return devolver;
 }

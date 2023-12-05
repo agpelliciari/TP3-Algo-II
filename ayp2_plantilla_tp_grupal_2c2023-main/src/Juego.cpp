@@ -30,8 +30,14 @@ void Juego::generar_arma_aleatoria(){
     inventario.agregar_arma_aleatoria();
 }
 
+void Juego::romper_arma(){
+    inventario.desequipar_arma();
+    inventario.baja();
+}
+
 void Juego::nuevo_nivel(){
     nivel++;
+
     generar_placa_aleatoria();
 
     int numero_aleatorio = rand() % PORCENTAJE_MAXIMO;
@@ -39,9 +45,10 @@ void Juego::nuevo_nivel(){
     {
         generar_arma_aleatoria();
     }
+
+    cout << "Cargando nivel " << nivel << " ..." << endl;
     
     nuevo_tablero();
-    partida();
 }
 
 void Juego::nuevo_tablero(){
@@ -75,11 +82,7 @@ void Juego::partida(){
         }
         else if (opcionValida == EQUIPAR_DESEQUIPAR_ARMA){
             equipar_o_desequipar_arma();
-            
-            if (!(inventario.arma_equipada()))
-            {
-                tablero_juego.modificar_tablero(inventario.arma_equipada());
-            }
+            tablero_juego.modificar_tablero(inventario.arma_equipada());
         }
         else if (opcionValida == MOSTRAR_PUNTAJE){
             imprimir_puntaje_total();
@@ -110,6 +113,24 @@ void Juego::moverse_en_tablero(){
     }
         
     costo_total_movimientos += costo_movimiento;
+
+    if (tablero_juego.es_posicion_final())
+    {
+        if (nivel == ULTIMO_NIVEL)
+        {
+            partida_en_curso = false;
+            cout << "Felicitaciones! a completado todos los niveles. El costo total para llegar al final que necesito fueron: " << costo_total_movimientos << " PUNTOS" << endl;
+        }
+        else
+        {
+            nuevo_nivel();
+        }
+    }
+
+    if (tablero_juego.es_posicion_pyramid())
+    {
+        romper_arma();
+    }
 }
 
 void Juego::imprimir_camino_minimo(){
@@ -142,8 +163,16 @@ void Juego::usar_camino_minimo(){
     }
     else
     {
-        costo_total_movimientos += costo_camino_minimo;
-        nuevo_nivel();
+        if (nivel == ULTIMO_NIVEL)
+        {
+            partida_en_curso = false;
+            cout << "Felicitaciones! a completado todos los niveles. El costo total para llegar al final que necesito fueron: " << costo_total_movimientos << " PUNTOS" << endl;
+        }
+        else
+        {
+            costo_total_movimientos += costo_camino_minimo;
+            nuevo_nivel();
+        }
     }
 }
 

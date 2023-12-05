@@ -26,12 +26,12 @@ const string ARRIBA = "W";
 const int MOVERSE_ARRIBA = 9;
 
 const string ABAJO = "S";
-const int MOVERSE_ABAJO = 1;
+const int MOVERSE_ABAJO = -9;
 
 const string IZQUIERDA = "A";
 const int MOVERSE_IZQUIERDA = -1;
 
 const string DERECHA = "D";
-const int MOVERSE_DERECHA = -9;
+const int MOVERSE_DERECHA = +1;
 
 #endif
