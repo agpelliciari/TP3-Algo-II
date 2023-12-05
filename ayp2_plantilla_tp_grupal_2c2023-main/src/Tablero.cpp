@@ -89,7 +89,7 @@ void Tablero::conectar_casilla(size_t casilla, int peso, bool bidireccional) {
 
         }
 
-    } else if( !es_borde_inferior(casilla) ){ //BORDE DE ABAJO
+    } else if( es_borde_inferior(casilla) ){ //BORDE DE ABAJO
         
         if( !es_posicion_pared(int(casilla_arriba) ) ){
 
@@ -190,7 +190,7 @@ void Tablero::conectar_casilla(size_t casilla, int peso, bool bidireccional) {
 
 void Tablero::set_layout(int altura) {
 
-    paredes = elegir_paredes(es_par(altura));
+    paredes = elegir_paredes(es_par(static_cast<size_t>(altura)));
 
     for(size_t i = 0;i<paredes.size();i++){
 
@@ -419,25 +419,25 @@ void Tablero::crear_pyramid() {
     int segundo_numero_aleatorio = 1 + (rand() % 2) ;
     
     if (primer_numero_aleatorio == 1) {
-        int posicion_primer_pyramid = 1 + static_cast<int>(rand() % (CANT_CASILLEROS-1));
+        int posicion_primer_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 1));
         while (es_posicion_pared(posicion_primer_pyramid)) {
-            posicion_primer_pyramid = 1 + static_cast<int>(rand() % (CANT_CASILLEROS-1));
+            posicion_primer_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 1));
         }
         pos_pyramid[0] = posicion_primer_pyramid;
         cout<<"Pyramid 1 esta en"<<posicion_primer_pyramid<<endl;
     }
 
     if (segundo_numero_aleatorio == 1) {
-        int posicion_segundo_pyramid = 1 + static_cast<int>(rand() % (CANT_CASILLEROS-1));
+        int posicion_segundo_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 1));
         while ((es_posicion_pared(posicion_segundo_pyramid)) || (posicion_segundo_pyramid == pos_pyramid[0])) {
-            posicion_segundo_pyramid = 1 + static_cast<int>(rand() % (CANT_CASILLEROS-1));
+            posicion_segundo_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 1));
         }
         pos_pyramid[1] = posicion_segundo_pyramid;
         cout<<"Pyramid 2 esta en"<<posicion_segundo_pyramid<<endl;
-    }/*/
-    pos_pyramid[0] = 9;
-    pos_pyramid[1] = 1;
+    }    /*/
 
+    pos_pyramid[0] = 2;
+    
     if (pos_pyramid[0] != (-1)) {
 
         zona_peligrosa((size_t) pos_pyramid[0]);
@@ -462,7 +462,6 @@ void Tablero::iniciar_tablero(int altura){
     cout<<"Ubicando pyramids.."<<endl;
     crear_pyramid();// ubica los enemigos en el tablero.
     cout<<"ready pa.."<<endl;
-    layout->mostrarMatrizAdyacencia();
 }
 
 void Tablero::zona_peligrosa(size_t casilla){
@@ -478,10 +477,10 @@ void Tablero::zona_peligrosa(size_t casilla){
 
     }
 
-    if (!es_posicion_pared(static_cast<int>(casilla+IZQ)) && !es_zona_peligrosa(casilla+IZQ) && !es_borde_izquierdo(casilla)){ //Casilla Izq a pyramid
-        conectar_casilla(casilla+IZQ,FACTOR_RIESGO*PESO_BASE, true);
-        conectar_casilla((casilla+IZQ),PESO_BASE, false);
-        peligrosas.push_back(casilla+IZQ);
+    if (!es_posicion_pared(static_cast<int>(casilla + (size_t) IZQ)) && !es_zona_peligrosa(casilla + (size_t) IZQ) && !es_borde_izquierdo(casilla)){ //Casilla Izq a pyramid
+        conectar_casilla(casilla + (size_t) IZQ, FACTOR_RIESGO * PESO_BASE, true);
+        conectar_casilla((casilla + (size_t) IZQ), PESO_BASE, false);
+        peligrosas.push_back(casilla + (size_t) IZQ);
 
     }
 
@@ -492,10 +491,11 @@ void Tablero::zona_peligrosa(size_t casilla){
 
     }
 
-    if (!es_posicion_pared(static_cast<int>(casilla+ABAJO)) && !es_zona_peligrosa(casilla+ABAJO) && !es_borde_inferior(casilla)){ //Casilla abajo a pyramid
-        conectar_casilla(casilla+ABAJO,FACTOR_RIESGO*PESO_BASE, true);
-        conectar_casilla((casilla+ABAJO),PESO_BASE, false);
-        peligrosas.push_back(casilla+ABAJO);
+    if (!es_posicion_pared(static_cast<int>(casilla + (size_t) ABAJO)) && !es_zona_peligrosa(casilla +
+                                                                                             (size_t) ABAJO) && !es_borde_inferior(casilla)){ //Casilla abajo a pyramid
+        conectar_casilla(casilla + (size_t) ABAJO, FACTOR_RIESGO * PESO_BASE, true);
+        conectar_casilla((casilla + (size_t) ABAJO), PESO_BASE, false);
+        peligrosas.push_back(casilla + (size_t) ABAJO);
 
     }
 
@@ -517,13 +517,13 @@ void Tablero::quitar_zona_peligrosa(size_t casilla){
 void Tablero::modificar_tablero(bool arma){
     if (arma){
         for (size_t i=0; i<pos_pyramid.size();i++){
-            quitar_zona_peligrosa(pos_pyramid[i]);
+            quitar_zona_peligrosa(static_cast<size_t>(pos_pyramid[i]));
             }
         peligrosas={};  //cuando termina de quitar las peligrosas, setea el atributo a vector vacio.
     }
     else{
         for (size_t i=0; i<pos_pyramid.size();i++){ 
-            zona_peligrosa(pos_pyramid[i]); // las casillas alrededor de c/pyramid se marcan peligrosas.
+            zona_peligrosa(static_cast<size_t>(pos_pyramid[i])); // las casillas alrededor de c/pyramid se marcan peligrosas.
         }        
     }
 }
@@ -539,7 +539,7 @@ int Tablero::actualizar_posicion(int comando){
 
     layout->usar_dijkstra();
     std::pair<std::vector<size_t>, int> movimiento;
-    size_t pos_destino = static_cast <size_t> (pos_jugador+comando);
+    size_t pos_destino = static_cast <size_t> (pos_jugador + static_cast<size_t>(comando));
     movimiento=layout->obtener_camino_minimo(pos_jugador,pos_destino); //el movimiento es de donde a donde y cuanto cuesta
 
     if (movimiento.first.empty()){
@@ -617,7 +617,8 @@ bool Tablero::es_posicion_pyramid() {
     }
     return devolver;
 }
- bool Tablero::es_zona_peligrosa(size_t casilla){
+
+bool Tablero::es_zona_peligrosa(size_t casilla){
      bool devolver = false;
      size_t i = 0;
      while( i < peligrosas.size() && !devolver){

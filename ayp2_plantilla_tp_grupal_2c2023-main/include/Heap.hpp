@@ -87,11 +87,14 @@ Heap<T, comp>::Heap(){
 
 template<class T, bool (*comp)(T, T)>
 void Heap<T, comp>::heapsort(){
-    for (size_t i = tamanio() - 1; i > 0; i--) //aca hay bug? 
-    {
-        swap(0, i);  //el 0 representa la raiz, la i es el ultimo elemento.
-        rearmar_heap(i, 0);
+    if(!vacio()){
+        for (size_t i = tamanio() - 1; i > 0; i--) //aca hay bug?
+        {
+            swap(0, i);  //el 0 representa la raiz, la i es el ultimo elemento.
+            rearmar_heap(i, 0);
+        }
     }
+
 }
 
 template<class T, bool (*comp)(T, T)>
