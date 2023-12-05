@@ -440,8 +440,9 @@ void Tablero::crear_pyramid() {
 
 void Tablero::iniciar_tablero(int altura){
     pre_tablero();  //genera el tablero bruto con todas las aristas base
+    restaurar_atributos();
     set_layout(altura); //ubica paredes
-    crear_pyramid(); // ubica los enemigos en el tablero.
+    crear_pyramid();// ubica los enemigos en el tablero.
 }
 
 void Tablero::zona_peligrosa(size_t casilla){
@@ -523,4 +524,33 @@ int Tablero::actualizar_posicion(int comando){
 void Tablero::conectar_casilleros(size_t casilla, size_t casilla_a_conectar, int peso) {
     layout->cambiar_arista(casilla,casilla_a_conectar,peso);
     layout->cambiar_arista(casilla_a_conectar,casilla,peso);
+}
+
+void Tablero::restaurar_atributos() {
+
+    this->pos_pyramid = {-1,-1};
+    this->pos_jugador = ENTRADA;
+
+}
+
+bool Tablero::es_posicion_final() {
+
+    return pos_jugador == SALIDA;
+}
+
+bool Tablero::es_posicion_pyramid() {
+    bool devolver = false;
+
+    while(size_t i = 0 < pos_pyramid.size() && !devolver){
+
+        if(pos_pyramid[i] == pos_jugador){
+
+            devolver = true;
+
+        }
+
+        i++;
+
+    }
+    return devolver;
 }

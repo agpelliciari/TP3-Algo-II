@@ -16,15 +16,6 @@ add_executable(Google_Tests_run
         ../src/Dijkstra.cpp
         ../src/Floyd.cpp
         ../src/Matriz.cpp
-        ../include/Tablero.hpp
-        ../src/Tablero.cpp
-        ../src/Juego.cpp
-        ../src/Inventario_de_Armas.cpp
-        ../src/Menu.cpp
-        ../src/Menu_principal.cpp
-        ../src/Placa.cpp
-        ../src/Arma.cpp
-        ../src/Arbol_de_placas.cpp
 )
 
 target_link_libraries(Google_Tests_run gtest gtest_main)
