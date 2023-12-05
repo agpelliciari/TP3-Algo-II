@@ -83,7 +83,7 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
         }
 
     } else if( casilla >= 1 && casilla<= (TAMANIO_TABLERO-2) ){ //BORDE DE ABAJO
-
+        
         if( !es_posicion_pared(int(casilla_arriba) ) ){
 
             conectar_casilleros(casilla,casilla_arriba,peso);
@@ -103,7 +103,7 @@ void Tablero::conectar_casilla(size_t casilla, int peso) {
         }
 
     } else if (casilla >= (CANT_CASILLEROS-(TAMANIO_TABLERO-1)) && casilla <= (CANT_CASILLEROS-2)){ //BORDE SUPERIOR
-
+        
         if( !es_posicion_pared(int(casilla_izquierda) ) ){
 
             conectar_casilleros(casilla,casilla_izquierda,peso);
@@ -448,19 +448,25 @@ void Tablero::iniciar_tablero(int altura){
 void Tablero::zona_peligrosa(size_t casilla){
     
     const int DER=1; const int IZQ=-1; const int ARRIBA=9; const int ABAJO=-9;
-    //Conecto todas las casillas adyacentes a piramid con el metodo conectar. //hablar con marian para sobrecargarlo
+    //Conecto todas las casillas adyacentes a piramid con el metodo conectar.
     //Luego aislo a pyramid.
 
-    conectar_casilla(casilla+DER,FACTOR_RIESGO*PESO_BASE);
-    conectar_casilla(casilla+IZQ,FACTOR_RIESGO*PESO_BASE);
-    conectar_casilla(casilla+ARRIBA,FACTOR_RIESGO*PESO_BASE);
-    conectar_casilla(casilla+ABAJO,FACTOR_RIESGO*PESO_BASE);
-
-    peligrosas.push_back(casilla+DER);
-    peligrosas.push_back(casilla+IZQ);
-    peligrosas.push_back(casilla+ARRIBA);
-    peligrosas.push_back(casilla+ABAJO);
-    
+    if (!es_posicion_pared(casilla+DER)){
+        conectar_casilla(casilla+DER,FACTOR_RIESGO*PESO_BASE);
+        peligrosas.push_back(casilla+DER);
+    }
+    if (!es_posicion_pared(casilla+IZQ)){
+        conectar_casilla(casilla+IZQ,FACTOR_RIESGO*PESO_BASE);
+        peligrosas.push_back(casilla+IZQ);
+    }
+    if (!es_posicion_pared(casilla+ARRIBA)){
+        conectar_casilla(casilla+ARRIBA,FACTOR_RIESGO*PESO_BASE);
+        peligrosas.push_back(casilla+ARRIBA);
+    }
+    if (!es_posicion_pared(casilla+ABAJO)){
+        conectar_casilla(casilla+ABAJO,FACTOR_RIESGO*PESO_BASE);
+        peligrosas.push_back(casilla+ABAJO);
+    }   
     aislar_casilla(casilla);    //desconecto a pyramid del resto de casillas.
 }
 
@@ -471,7 +477,7 @@ void Tablero::quitar_zona_peligrosa(size_t casilla){
     conectar_casilla(casilla+DER, PESO_BASE);
     conectar_casilla(casilla+IZQ, PESO_BASE);
     conectar_casilla(casilla+ARRIBA, PESO_BASE);
-    conectar_casilla(casilla+ABAJO, PESO_BASE);  //casillas aledanias a piramid restituidas
+    conectar_casilla(casilla+ABAJO, PESO_BASE);  //casillas adyacentes a piramid restituidas
 
     conectar_casilla(casilla, PESO_BASE);  //reconecta a piramid/*/
 }
@@ -481,7 +487,7 @@ void Tablero::modificar_tablero(bool arma){
         for (size_t i=0; i<pos_pyramid.size();i++){
             quitar_zona_peligrosa(pos_pyramid[i]);
             }
-        peligrosas={};  //cuando termina de quitar las casillas peligrosas, setea el atributo a vector vacio.
+        peligrosas={};  //cuando termina de quitar las peligrosas, setea el atributo a vector vacio.
     }
     else{
         for (size_t i=0; i<pos_pyramid.size();i++){ 
