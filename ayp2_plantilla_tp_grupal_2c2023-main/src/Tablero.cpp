@@ -413,7 +413,7 @@ bool Tablero::es_posicion_pared(int posicion) {
 
 void Tablero::crear_pyramid() {
 
-    /*/srand(static_cast<unsigned int>(time(0)));
+    srand(static_cast<unsigned int>(time(0)));
 
     int primer_numero_aleatorio = 1 + (rand() % 2) ;
     int segundo_numero_aleatorio = 1 + (rand() % 2) ;
@@ -434,9 +434,7 @@ void Tablero::crear_pyramid() {
         }
         pos_pyramid[1] = posicion_segundo_pyramid;
         cout<<"Pyramid 2 esta en"<<posicion_segundo_pyramid<<endl;
-    }    /*/
-
-    pos_pyramid[0] = 2;
+    }
     
     if (pos_pyramid[0] != (-1)) {
 
@@ -461,7 +459,7 @@ void Tablero::iniciar_tablero(int altura){
     set_layout(altura); //ubica paredes
     cout<<"Ubicando pyramids.."<<endl;
     crear_pyramid();// ubica los enemigos en el tablero.
-    cout<<"ready pa.."<<endl;
+    cout<<"Arranca el juego.."<<endl;
 }
 
 void Tablero::zona_peligrosa(size_t casilla){
