@@ -470,7 +470,7 @@ void Tablero::zona_peligrosa(size_t casilla){
     //Conecto todas las casillas adyacentes a piramid con el metodo conectar.
     //Luego aislo a pyramid.
 
-    if (!es_posicion_pared(static_cast<int>(casilla+DER)) && es_zona_peligrosa(casilla) && !es_borde_derecho(casilla)){   //Casilla Derecha a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla+DER)) && !es_zona_peligrosa(casilla+DER) && !es_borde_derecho(casilla)){   //Casilla Derecha a pyramid
 
         conectar_casilla(casilla+DER,FACTOR_RIESGO*PESO_BASE, true);
         conectar_casilla((casilla+DER),PESO_BASE, false);
@@ -478,21 +478,21 @@ void Tablero::zona_peligrosa(size_t casilla){
 
     }
 
-    if (!es_posicion_pared(static_cast<int>(casilla+IZQ)) && es_zona_peligrosa(casilla) && !es_borde_izquierdo(casilla)){ //Casilla Izq a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla+IZQ)) && !es_zona_peligrosa(casilla+IZQ) && !es_borde_izquierdo(casilla)){ //Casilla Izq a pyramid
         conectar_casilla(casilla+IZQ,FACTOR_RIESGO*PESO_BASE, true);
         conectar_casilla((casilla+IZQ),PESO_BASE, false);
         peligrosas.push_back(casilla+IZQ);
 
     }
 
-    if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA)) && es_zona_peligrosa(casilla) && !es_borde_superior(casilla)){ //Casilla arriba a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA)) && !es_zona_peligrosa(casilla+ARRIBA) && !es_borde_superior(casilla)){ //Casilla arriba a pyramid
         conectar_casilla(casilla+ARRIBA,FACTOR_RIESGO*PESO_BASE, true);
         conectar_casilla((casilla+ARRIBA),PESO_BASE, false);
         peligrosas.push_back(casilla+ARRIBA);
 
     }
 
-    if (!es_posicion_pared(static_cast<int>(casilla+ABAJO)) && es_zona_peligrosa(casilla) && !es_borde_inferior(casilla)){ //Casilla abajo a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla+ABAJO)) && !es_zona_peligrosa(casilla+ABAJO) && !es_borde_inferior(casilla)){ //Casilla abajo a pyramid
         conectar_casilla(casilla+ABAJO,FACTOR_RIESGO*PESO_BASE, true);
         conectar_casilla((casilla+ABAJO),PESO_BASE, false);
         peligrosas.push_back(casilla+ABAJO);

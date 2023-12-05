@@ -59,7 +59,6 @@ public:
 
     ~Grafo();
 
-    void mostrarMatrizAdyacencia();
 };
 
 #endif
