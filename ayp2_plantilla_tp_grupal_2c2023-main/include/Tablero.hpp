@@ -15,7 +15,7 @@ class Tablero {
 
 private:
     Grafo* layout;
-    size_t pos_inicio;
+    size_t pos_entrada;
     size_t pos_salida;
     size_t pos_jugador;
     std::vector<int> pos_pyramid;
