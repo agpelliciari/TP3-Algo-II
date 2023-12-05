@@ -69,7 +69,6 @@ private:
     // Pre: -.
     // Post: Flujo de una partida.
     void partida();
-
 public:
     
     // Constructor.
