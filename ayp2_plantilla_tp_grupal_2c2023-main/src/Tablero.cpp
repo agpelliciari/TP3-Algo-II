@@ -450,51 +450,51 @@ void Tablero::zona_peligrosa(size_t casilla){
     //Conecto todas las casillas adyacentes a piramid con el metodo conectar.
     //Luego aislo a pyramid.
 
-    if (!es_posicion_pared(casilla+DER)){   //Casilla Derecha a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla+DER))){   //Casilla Derecha a pyramid
         conectar_casilla(casilla+DER,FACTOR_RIESGO*PESO_BASE);
         peligrosas.push_back(casilla+DER);
         //Arista unidireccional desde la casilla peligrosa derecha hacia sus adyacentes
-        if(!es_posicion_pared(casilla+DER)+DER)
+        if(!es_posicion_pared(static_cast<int>(casilla+DER)+DER))
             layout->cambiar_arista(casilla+DER,(casilla+DER)+DER,PESO_BASE);
-        if(!es_posicion_pared(casilla+DER)+ARRIBA)
+        if(!es_posicion_pared(static_cast<int>(casilla+DER)+ARRIBA))
             layout->cambiar_arista(casilla+DER,(casilla+DER)+ARRIBA,PESO_BASE);
-        if(!es_posicion_pared(casilla+DER)+ABAJO)
+        if(!es_posicion_pared(static_cast<int>(casilla+DER)+ABAJO))
             layout->cambiar_arista(casilla+DER,(casilla+DER)+ABAJO,PESO_BASE);    
     }
 
-    if (!es_posicion_pared(casilla+IZQ)){ //Casilla Izq a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla+IZQ))){ //Casilla Izq a pyramid
         conectar_casilla(casilla+IZQ,FACTOR_RIESGO*PESO_BASE);
         peligrosas.push_back(casilla+IZQ);
         //Arista unidireccional desde la casilla peligrosa Izquierda hacia sus adyacentes
-        if (!es_posicion_pared(casilla+IZQ+IZQ))
+        if (!es_posicion_pared(static_cast<int>(casilla+IZQ+IZQ)))
             layout->cambiar_arista(casilla+IZQ,(casilla+IZQ)+IZQ,PESO_BASE);
-        if (!es_posicion_pared(casilla+IZQ+ARRIBA))
+        if (!es_posicion_pared(static_cast<int>(casilla+IZQ+ARRIBA)))
             layout->cambiar_arista(casilla+IZQ,(casilla+IZQ)+ARRIBA,PESO_BASE);
-        if (!es_posicion_pared(casilla+IZQ+ABAJO))
+        if (!es_posicion_pared(static_cast<int>(casilla+IZQ+ABAJO)))
             layout->cambiar_arista(casilla+IZQ,(casilla+IZQ)+ABAJO,PESO_BASE);
     }
 
-    if (!es_posicion_pared(casilla+ARRIBA)){ //Casilla arriba a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA))){ //Casilla arriba a pyramid
         conectar_casilla(casilla+ARRIBA,FACTOR_RIESGO*PESO_BASE);
         peligrosas.push_back(casilla+ARRIBA);
         //Arista unidireccional desde la casilla peligrosa de arriba hacia sus adyacentes
-        if (!es_posicion_pared(casilla+ARRIBA+DER))
+        if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA+DER)))
             layout->cambiar_arista(casilla+ARRIBA,(casilla+ARRIBA)+DER,PESO_BASE);
-        if (!es_posicion_pared(casilla+ARRIBA+IZQ))
+        if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA+IZQ)))
             layout->cambiar_arista(casilla+ARRIBA,(casilla+ARRIBA)+IZQ,PESO_BASE);
-        if (!es_posicion_pared(casilla+ARRIBA+ARRIBA))
+        if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA+ARRIBA)))
             layout->cambiar_arista(casilla+ARRIBA,(casilla+ARRIBA)+ARRIBA,PESO_BASE);
     }
 
-    if (!es_posicion_pared(casilla+ABAJO)){ //Casilla abajo a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla+ABAJO))){ //Casilla abajo a pyramid
         conectar_casilla(casilla+ABAJO,FACTOR_RIESGO*PESO_BASE);
         peligrosas.push_back(casilla+ABAJO);    
         //Arista unidireccional desde la casilla peligrosa de abajo hacia sus adyacentes
-        if (!es_posicion_pared(casilla+ABAJO+DER))
+        if (!es_posicion_pared(static_cast<int>(casilla+ABAJO+DER)))
             layout->cambiar_arista(casilla+ABAJO,(casilla+ABAJO)+DER,PESO_BASE);
-        if (!es_posicion_pared(casilla+ABAJO+IZQ))
+        if (!es_posicion_pared(static_cast<int>(casilla+ABAJO+IZQ)))
             layout->cambiar_arista(casilla+ABAJO,(casilla+ABAJO)+IZQ,PESO_BASE);
-        if (!es_posicion_pared(casilla+ABAJO+ABAJO))
+        if (!es_posicion_pared(static_cast<int>(casilla+ABAJO+ABAJO)))
             layout->cambiar_arista(casilla+ABAJO,(casilla+ABAJO)+ABAJO,PESO_BASE);
     }   
     aislar_casilla(casilla);    //desconecto a pyramid del resto de casillas.
