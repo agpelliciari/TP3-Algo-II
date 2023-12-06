@@ -138,15 +138,19 @@ void Juego::imprimir_camino_minimo(){
     vector<size_t> posiciones_camino_minimo = tupla.first;
     int costo_camino_minimo = tupla.second;
 
-    cout << "Direcciones del camino minimo para completar el nivel " << nivel << ": ";
-
-    for (size_t i = 0; i < posiciones_camino_minimo.size(); i++)
+    if (posiciones_camino_minimo.empty())
     {
-        cout << posiciones_camino_minimo[i] << ", ";
+        cout << "No hay caminos minimos para completar este nivel, equipese un arma o asuma la derrota" << endl;
     }
-    cout << endl;
-
-    cout << "El costo de estos movimientos es: " << costo_camino_minimo << endl;
+    else
+    {
+        cout << "Direcciones del camino minimo para completar el nivel " << nivel << ": ";
+        for (size_t i = 0; i < posiciones_camino_minimo.size(); i++){
+            cout << posiciones_camino_minimo[i] << ", ";
+        }
+        cout << endl;
+        cout << "El costo de estos movimientos es: " << costo_camino_minimo << endl;
+    }
 }
 
 void Juego::usar_camino_minimo(){
