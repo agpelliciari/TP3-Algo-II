@@ -290,8 +290,6 @@ bool Tablero::es_borde_izquierdo(size_t casilla) {
 
 }
 
-
-
 void Tablero::pre_tablero() {
 
     for (size_t i = 0; i < TAMANIO_TABLERO; i++) {
@@ -518,7 +516,9 @@ void Tablero::quitar_zona_peligrosa(size_t casilla){
 }
 
 void Tablero::modificar_tablero(bool arma){
+
     if (arma){
+
         for (size_t i=0; i<pos_pyramid.size();i++){
             if (pos_pyramid[i]!=-1)
                 quitar_zona_peligrosa(static_cast<size_t>(pos_pyramid[i]));
@@ -526,6 +526,7 @@ void Tablero::modificar_tablero(bool arma){
         peligrosas={};  //cuando termina de quitar las peligrosas, setea el atributo a vector vacio.
     }
     else{
+
         for (size_t i=0; i<pos_pyramid.size();i++){
             if (pos_pyramid[i]!=-1){
                 zona_peligrosa(static_cast<size_t>(pos_pyramid[i])); // las casillas alrededor de c/pyramid se marcan peligrosas.
@@ -650,8 +651,6 @@ void Tablero::eliminar_pyramid(int indice){
     pos_pyramid[indice]=-1;
 }
 
-
-
 void Tablero::establecer_matriz_tablero() {
 
     this->matriz_tablero = Matriz(TAMANIO_TABLERO);
@@ -676,8 +675,8 @@ void Tablero::establecer_matriz_tablero() {
 
         if (pos_pyramid[iterador] != -1) {
 
-            posicion_i = (pos_pyramid[iterador]) / (TAMANIO_TABLERO);
-            posicion_j = (pos_pyramid[iterador]) % (TAMANIO_TABLERO);
+            posicion_i = (static_cast<size_t>(pos_pyramid[iterador])) / (TAMANIO_TABLERO);
+            posicion_j = (static_cast<size_t>(pos_pyramid[iterador])) % (TAMANIO_TABLERO);
 
             matriz_tablero.elemento(posicion_i, posicion_j) = -1;
         }
@@ -696,7 +695,6 @@ void Tablero::establecer_matriz_tablero() {
     matriz_tablero.elemento(posicion_i, posicion_j) = 99;
 
 }
-
 
 void Tablero::mostrar_matriz_tablero() {
 
@@ -726,5 +724,11 @@ void Tablero::mostrar_matriz_tablero() {
         std::cout << "\n";
 
     }
+
+}
+
+Tablero::~Tablero(){
+
+    delete layout;
 
 }

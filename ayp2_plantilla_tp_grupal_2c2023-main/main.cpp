@@ -1,6 +1,4 @@
 #include "include/Juego.hpp"
-#include <string>
-#include <iostream>
 
 
 int main() {

@@ -126,6 +126,8 @@ public:
     bool es_borde_inferior(size_t casilla);
 
     void mostrar_matriz_tablero();
+
+    ~Tablero();
 };
 
 #endif

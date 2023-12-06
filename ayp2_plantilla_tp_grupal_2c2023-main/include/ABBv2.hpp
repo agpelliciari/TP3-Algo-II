@@ -184,7 +184,6 @@ void ABB<T, menor, igual>::alta(T dato, NodoABB<T, menor, igual>* nodo_actual) {
         }
     }
     else {
-        delete(nodo_actual);
         throw ABB_exception();
     }
 
