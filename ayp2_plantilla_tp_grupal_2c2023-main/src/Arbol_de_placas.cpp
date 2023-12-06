@@ -64,7 +64,7 @@ void Arbol_de_placas::agregar_placa_aleatoria(){
     int numero_aleatorio = rand() % RANGO_MAXIMO + RANGO_MINIMO;
     Placa* ptr_placa = new Placa("", "", numero_aleatorio);
     alta_placa(ptr_placa);
-    cout << "Ha obtenido una nueva placa de ID: " << ptr_placa << endl;
+    cout << "Ha obtenido una nueva placa de ID: " << numero_aleatorio << endl;
 }
 
 Arbol_de_placas::~Arbol_de_placas(){

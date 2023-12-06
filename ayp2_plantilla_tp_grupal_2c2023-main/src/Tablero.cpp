@@ -609,7 +609,7 @@ bool Tablero::es_posicion_pyramid() {
     while( i < pos_pyramid.size() && !devolver){
 
         if(pos_pyramid[i] == static_cast<int>(pos_jugador)){
-            eliminar_pyramid(i);
+            eliminar_pyramid(static_cast<int>(i));
             devolver = true;
         }
 

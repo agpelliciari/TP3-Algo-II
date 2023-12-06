@@ -34,6 +34,7 @@ void Juego::romper_arma(){
 }
 
 void Juego::nuevo_nivel(){
+    cout << "Excelente! completo el nivel " << nivel << ". El siguiente no sera tan facil." << endl;
     nivel++;
 
     generar_placa_aleatoria();
@@ -63,7 +64,7 @@ void Juego::partida(){
     cout << "Cargando nivel " << nivel << " ..." << endl;
     do
     {
-        // tablero_juego.imprimir_tablero();
+        tablero_juego.mostrar_matriz_tablero();
 
         menu_juego.imprimir_menu_juego();
 
@@ -117,7 +118,7 @@ void Juego::moverse_en_tablero(){
         if (nivel == ULTIMO_NIVEL)
         {
             partida_en_curso = false;
-            cout << "Felicitaciones! a completado todos los niveles. El costo total para llegar al final que necesito fueron: " << costo_total_movimientos << " PUNTOS" << endl;
+            cout << "Felicitaciones! completo todos los niveles. El costo total para llegar al final que necesito fueron: " << costo_total_movimientos << " PUNTOS" << endl;
         }
         else
         {
