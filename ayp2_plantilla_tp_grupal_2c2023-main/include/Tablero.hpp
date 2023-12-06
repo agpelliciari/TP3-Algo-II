@@ -29,7 +29,6 @@ private:
     std::vector<size_t> paredes;
     std::vector<size_t> peligrosas;
     Matriz matriz_tablero;
-    bool se_establecio_matriz_tablero;
 
 
     //pre:-

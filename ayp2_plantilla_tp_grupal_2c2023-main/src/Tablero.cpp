@@ -12,7 +12,6 @@ Tablero::Tablero() {
     this->pos_entrada = ENTRADA;
     this->pos_salida = SALIDA;
     this->pos_jugador = ENTRADA;
-    this->se_establecio_matriz_tablero = false;
 }
 
 
@@ -696,16 +695,12 @@ void Tablero::establecer_matriz_tablero() {
     posicion_j = pos_jugador % TAMANIO_TABLERO;
     matriz_tablero.elemento(posicion_i, posicion_j) = 99;
 
-    se_establecio_matriz_tablero = true;
-
 }
 
 
 void Tablero::mostrar_matriz_tablero() {
 
-    if (!se_establecio_matriz_tablero) {
-        establecer_matriz_tablero();
-    }
+    establecer_matriz_tablero();
 
     for (int i = (((int)TAMANIO_TABLERO)-1); i >= 0; i--) {
 
