@@ -515,14 +515,17 @@ void Tablero::quitar_zona_peligrosa(size_t casilla){
 void Tablero::modificar_tablero(bool arma){
     if (arma){
         for (size_t i=0; i<pos_pyramid.size();i++){
-            quitar_zona_peligrosa(static_cast<size_t>(pos_pyramid[i]));
+            if (pos_pyramid[i]!=-1)
+                quitar_zona_peligrosa(static_cast<size_t>(pos_pyramid[i]));
             }
         peligrosas={};  //cuando termina de quitar las peligrosas, setea el atributo a vector vacio.
     }
     else{
-        for (size_t i=0; i<pos_pyramid.size();i++){ 
-            zona_peligrosa(static_cast<size_t>(pos_pyramid[i])); // las casillas alrededor de c/pyramid se marcan peligrosas.
-        }        
+        for (size_t i=0; i<pos_pyramid.size();i++){
+            if (pos_pyramid[i]!=-1){
+                zona_peligrosa(static_cast<size_t>(pos_pyramid[i])); // las casillas alrededor de c/pyramid se marcan peligrosas.
+            }        
+        }
     }
 }
 
@@ -556,11 +559,6 @@ int Tablero::actualizar_posicion(int comando){
     }
 
     return movimiento.second;
-    
-    /*/if (!es_peligrosa)
-        return (movimiento.second);
-    else
-        return (movimiento.second);/*/
 
     }
 
@@ -591,6 +589,7 @@ void Tablero::restaurar_atributos() {
 
     this->pos_pyramid = {-1,-1};
     this->pos_jugador = ENTRADA;
+    this->peligrosas={};
 
 }
 
@@ -605,9 +604,8 @@ bool Tablero::es_posicion_pyramid() {
     while( i < pos_pyramid.size() && !devolver){
 
         if(pos_pyramid[i] == static_cast<int>(pos_jugador)){
-
+            eliminar_pyramid(i);
             devolver = true;
-
         }
 
         i++;
@@ -641,4 +639,8 @@ bool Tablero::es_borde_superior(size_t casilla){
 bool Tablero::es_borde_inferior(size_t casilla){
 
     return casilla >= 1 && casilla<= (TAMANIO_TABLERO-2);
+}
+
+void Tablero::eliminar_pyramid(int indice){
+    pos_pyramid[indice]=-1;
 }

@@ -48,7 +48,7 @@ private:
 
     //pre:-
     //pos: Quita a pyramid del tablero, restituyendo la casilla y seteando las aristas a vertices adyacentes a valor base.
-    void eliminar_pyramid();
+    void eliminar_pyramid(int casilla);
 
     //pre:-
     //pos: Inicia el grafo conectando los vertices a traves de aristas de peso base. (GONZA, si le pifie editalo)
