@@ -424,18 +424,18 @@ void Tablero::crear_pyramid() {
     int segundo_numero_aleatorio = 1 + (rand() % 2) ;
     
     if (primer_numero_aleatorio == 1) {
-        int posicion_primer_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 1));
+        int posicion_primer_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 2));
         while (es_posicion_pared(posicion_primer_pyramid)) {
-            posicion_primer_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 1));
+            posicion_primer_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 2));
         }
         pos_pyramid[0] = posicion_primer_pyramid;
         cout<<"Pyramid 1 esta en"<<posicion_primer_pyramid<<endl;
     }
 
     if (segundo_numero_aleatorio == 1) {
-        int posicion_segundo_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 1));
+        int posicion_segundo_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 2));
         while ((es_posicion_pared(posicion_segundo_pyramid)) || (posicion_segundo_pyramid == pos_pyramid[0])) {
-            posicion_segundo_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 1));
+            posicion_segundo_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 2));
         }
         pos_pyramid[1] = posicion_segundo_pyramid;
         cout<<"Pyramid 2 esta en"<<posicion_segundo_pyramid<<endl;
