@@ -61,9 +61,25 @@ int Arbol_de_placas::altura_arbol_placas(){
 }
 
 void Arbol_de_placas::agregar_placa_aleatoria(){
-    int numero_aleatorio = rand() % RANGO_MAXIMO + RANGO_MINIMO;
-    Placa* ptr_placa = new Placa("", "", numero_aleatorio);
-    alta_placa(ptr_placa);
+    srand(static_cast<unsigned>(time(0)));
+    int numero_aleatorio;
+    bool repetida;
+    do
+    {
+        numero_aleatorio = rand() % RANGO_MAXIMO + RANGO_MINIMO;
+        Placa* ptr_placa = new Placa("", "", numero_aleatorio);
+        repetida = arbol_placas.consulta(ptr_placa);
+
+        if (!repetida)
+        {
+            alta_placa(ptr_placa);
+        }
+        else
+        {
+            Placa::liberar(ptr_placa);  
+        }
+    } while (repetida);
+
     cout << "Ha obtenido una nueva placa de ID: " << numero_aleatorio << endl;
 }
 
