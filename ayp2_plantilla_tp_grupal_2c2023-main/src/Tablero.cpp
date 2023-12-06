@@ -5,6 +5,18 @@
 
 using namespace std;
 
+
+Tablero::Tablero() {
+    this->layout = new Grafo(CANT_CASILLEROS);
+    this->pos_pyramid = {-1,-1};
+    this->pos_entrada = ENTRADA;
+    this->pos_salida = SALIDA;
+    this->pos_jugador = ENTRADA;
+    this->se_establecio_matriz_tablero = false;
+}
+
+
+
 void Tablero::conectar_casilla(size_t casilla, int peso, bool bidireccional) {
 
     size_t ESQUINA_SUPERIOR_IZQUIERDA = CANT_CASILLEROS-TAMANIO_TABLERO;
@@ -279,13 +291,7 @@ bool Tablero::es_borde_izquierdo(size_t casilla) {
 
 }
 
-Tablero::Tablero() {
-    this->layout = new Grafo(CANT_CASILLEROS);
-    this->pos_pyramid = {-1,-1};
-    this->pos_entrada = ENTRADA;
-    this->pos_salida = SALIDA;
-    this->pos_jugador = ENTRADA;
-}
+
 
 void Tablero::pre_tablero() {
 
@@ -643,4 +649,87 @@ bool Tablero::es_borde_inferior(size_t casilla){
 
 void Tablero::eliminar_pyramid(int indice){
     pos_pyramid[indice]=-1;
+}
+
+
+
+void Tablero::establecer_matriz_tablero() {
+
+    this->matriz_tablero = Matriz(TAMANIO_TABLERO);
+
+    // Agrego las paredes a la matriz_tablero.
+
+    size_t posicion_i ;
+    size_t posicion_j ;
+
+    for (size_t iterador = 0; iterador < paredes.size(); iterador++) {
+
+        posicion_i = (paredes[iterador]) / (TAMANIO_TABLERO);
+        posicion_j = (paredes[iterador]) % (TAMANIO_TABLERO);
+
+        matriz_tablero.elemento(posicion_i, posicion_j) = 1;
+        
+    }
+
+    // Agrego los pyramid head a la matriz_tablero.
+
+    for (size_t iterador = 0; iterador < pos_pyramid.size(); iterador++) {
+
+        if (pos_pyramid[iterador] != -1) {
+
+            posicion_i = (pos_pyramid[iterador]) / (TAMANIO_TABLERO);
+            posicion_j = (pos_pyramid[iterador]) % (TAMANIO_TABLERO);
+
+            matriz_tablero.elemento(posicion_i, posicion_j) = -1;
+        }
+    }
+
+    // Agrego la SALIDA a la matriz_tablero.
+
+    posicion_i = SALIDA / TAMANIO_TABLERO;
+    posicion_j = SALIDA % TAMANIO_TABLERO;
+    matriz_tablero.elemento(posicion_i, posicion_j) = (int) SALIDA;
+
+    // Agrego la posicion del jugador a la matriz_tablero.
+
+    posicion_i = pos_jugador / TAMANIO_TABLERO;
+    posicion_j = pos_jugador % TAMANIO_TABLERO;
+    matriz_tablero.elemento(posicion_i, posicion_j) = 99;
+
+    se_establecio_matriz_tablero = true;
+
+}
+
+
+void Tablero::mostrar_matriz_tablero() {
+
+    if (!se_establecio_matriz_tablero) {
+        establecer_matriz_tablero();
+    }
+
+    for (int i = (((int)TAMANIO_TABLERO)-1); i >= 0; i--) {
+
+        for (size_t j = 0; j < TAMANIO_TABLERO; j++) {
+
+            if (matriz_tablero.elemento((size_t)i, j) == 99) {
+                std::cout << ROJO_EMOJI;
+            }
+            else if (matriz_tablero.elemento((size_t)i, j) == -1) {
+                std::cout << NEGRO_EMOJI;
+            }
+            else if (matriz_tablero.elemento((size_t)i, j) == 0) {
+                std::cout << BLANCO_EMOJI;
+            }
+            else if (matriz_tablero.elemento((size_t)i, j) == 1) {
+                std::cout << LADRILLO_EMOJI;
+            }
+            else if (matriz_tablero.elemento((size_t)i, j) == (int) SALIDA) {
+                std::cout << SALIDA_EMOJI;
+            }
+        }
+
+        std::cout << "\n";
+
+    }
+
 }

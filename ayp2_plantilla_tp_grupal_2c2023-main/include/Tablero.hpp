@@ -1,6 +1,12 @@
 #ifndef TABLERO_HPP
 #define TABLERO_HPP
 
+#define LADRILLO_EMOJI "\U0001f9f1"
+#define BLANCO_EMOJI "\u2B1C"
+#define SALIDA_EMOJI "\U0001f3c1"
+#define NEGRO_EMOJI "\u2B1B"
+#define ROJO_EMOJI "\U0001f7e5"
+
 #include <string>
 #include "Grafo.hpp"
 
@@ -10,6 +16,7 @@ const size_t ENTRADA=0;
 const size_t SALIDA=80;
 const int PESO_BASE=10;
 const int FACTOR_RIESGO=5;
+
 
 class Tablero {
 
@@ -21,6 +28,9 @@ private:
     std::vector<int> pos_pyramid;
     std::vector<size_t> paredes;
     std::vector<size_t> peligrosas;
+    Matriz matriz_tablero;
+    bool se_establecio_matriz_tablero;
+
 
     //pre:-
     //pos: Desconecta la casilla del layout seteando las aristas a vertices adyacentes a infinito.
@@ -83,6 +93,9 @@ private:
     //pos: Restaura todos los atributos del tablero.
     void restaurar_atributos();
 
+
+    void establecer_matriz_tablero();
+
 public:
     //constructor
     Tablero();
@@ -112,6 +125,8 @@ public:
     bool es_borde_superior(size_t casilla);
 
     bool es_borde_inferior(size_t casilla);
+
+    void mostrar_matriz_tablero();
 };
 
 #endif
