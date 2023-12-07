@@ -2,10 +2,10 @@
 #define TABLERO_HPP
 
 #define LADRILLO_EMOJI "\U0001f9f1"
-#define BLANCO_EMOJI "\U0001f6e3\uFE0F"
-#define SALIDA_EMOJI "\U0001f3c1"
-#define NEGRO_EMOJI "\u2622\uFE0F"
-#define ROJO_EMOJI "\U0001f7e5"
+#define CASILLEROS_EMOJI "\U0001f7e9"
+#define SALIDA_EMOJI "\U0001f384"
+#define PYRAMID_EMOJI "\U0001f479"
+#define JUGADOR_EMOJI "\U0001f385"
 
 #include <string>
 #include "Grafo.hpp"

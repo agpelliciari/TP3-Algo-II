@@ -723,13 +723,13 @@ void Tablero::mostrar_matriz_tablero() {
         for (size_t j = 0; j < TAMANIO_TABLERO; j++) {
 
             if (matriz_tablero.elemento((size_t)i, j) == 99) {
-                std::cout << ROJO_EMOJI;
+                std::cout << JUGADOR_EMOJI;
             }
             else if (matriz_tablero.elemento((size_t)i, j) == -1) {
-                std::cout << NEGRO_EMOJI;
+                std::cout << PYRAMID_EMOJI;
             }
             else if (matriz_tablero.elemento((size_t)i, j) == 0) {
-                std::cout << BLANCO_EMOJI;
+                std::cout << CASILLEROS_EMOJI;
             }
             else if (matriz_tablero.elemento((size_t)i, j) == 1) {
                 std::cout << LADRILLO_EMOJI;
