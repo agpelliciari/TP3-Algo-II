@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include "Constantes.hpp"
 
 using namespace std;
 
@@ -28,7 +29,6 @@ void Tablero::conectar_casilla(size_t casilla, int peso, bool bidireccional) {
 
     if(casilla < ENTRADA || casilla >(CANT_CASILLEROS-1)){
 
-        cout<<"error"<<endl;
         return;
 
     }
@@ -370,7 +370,6 @@ void Tablero::aislar_casilla(size_t posicion) {
         this->layout->eliminar_arista(posicion, posicion + TAMANIO_TABLERO);
         this->layout->eliminar_arista(posicion + TAMANIO_TABLERO, posicion);
 
-        //layout->mostrarMatrizAdyacencia();
 
     } else if ((posicion >= (CANT_CASILLEROS - TAMANIO_TABLERO)) && (posicion < CANT_CASILLEROS)) {
 
@@ -416,7 +415,7 @@ bool Tablero::es_posicion_pared(int posicion) {
 
 void Tablero::crear_pyramid() {
 
-    /*/srand(static_cast<unsigned int>(time(0)));
+    srand(static_cast<unsigned int>(time(0)));
 
     int primer_numero_aleatorio = 1 + (rand() % 2) ;
     int segundo_numero_aleatorio = 1 + (rand() % 2) ;
@@ -427,7 +426,6 @@ void Tablero::crear_pyramid() {
             posicion_primer_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 2));
         }
         pos_pyramid[0] = posicion_primer_pyramid;
-        cout<<"Pyramid 1 esta en"<<posicion_primer_pyramid<<endl;
     }
 
     if (segundo_numero_aleatorio == 1) {
@@ -436,11 +434,8 @@ void Tablero::crear_pyramid() {
             posicion_segundo_pyramid = 1 + static_cast<int>(static_cast<size_t>(rand()) % (CANT_CASILLEROS - 2));
         }
         pos_pyramid[1] = posicion_segundo_pyramid;
-        cout<<"Pyramid 2 esta en"<<posicion_segundo_pyramid<<endl;
-    }/*/
-    pos_pyramid[0] = 69;
-    pos_pyramid[1] = 7;
-    
+    }
+
     if (pos_pyramid[0] != (-1)) {
 
         zona_peligrosa((size_t) pos_pyramid[0]);
@@ -468,37 +463,36 @@ void Tablero::iniciar_tablero(int altura){
 }
 
 void Tablero::zona_peligrosa(size_t casilla){
-    const int DER=1; const int IZQ=-1; const int ARRIBA=9; const int ABAJO=-9;
     //Conecto todas las casillas adyacentes a piramid con el metodo conectar.
     //Luego aislo a pyramid.
 
-    if (!es_posicion_pared(static_cast<int>(casilla+DER)) && !es_zona_peligrosa(casilla+DER) && !es_borde_derecho(casilla)){   //Casilla Derecha a pyramid
+    if (!es_posicion_pared(static_cast<int>(casilla + MOVERSE_DERECHA)) && !es_zona_peligrosa(casilla + MOVERSE_DERECHA) && !es_borde_derecho(casilla)){   //Casilla Derecha a pyramid
 
-        conectar_casilla(casilla+DER,FACTOR_RIESGO*PESO_BASE, true);
-        conectar_casilla((casilla+DER),PESO_BASE, false);
-        peligrosas.push_back(casilla+DER);
-
-    }
-
-    if (!es_posicion_pared(static_cast<int>(casilla + (size_t) IZQ)) && !es_zona_peligrosa(casilla + (size_t) IZQ) && !es_borde_izquierdo(casilla)){ //Casilla Izq a pyramid
-        conectar_casilla(casilla + (size_t) IZQ, FACTOR_RIESGO * PESO_BASE, true);
-        conectar_casilla((casilla + (size_t) IZQ), PESO_BASE, false);
-        peligrosas.push_back(casilla + (size_t) IZQ);
+        conectar_casilla(casilla + MOVERSE_DERECHA, FACTOR_RIESGO * PESO_BASE, true);
+        conectar_casilla((casilla + MOVERSE_DERECHA), PESO_BASE, false);
+        peligrosas.push_back(casilla + MOVERSE_DERECHA);
 
     }
 
-    if (!es_posicion_pared(static_cast<int>(casilla+ARRIBA)) && !es_zona_peligrosa(casilla+ARRIBA) && !es_borde_superior(casilla)){ //Casilla arriba a pyramid
-        conectar_casilla(casilla+ARRIBA,FACTOR_RIESGO*PESO_BASE, true);
-        conectar_casilla((casilla+ARRIBA),PESO_BASE, false);
-        peligrosas.push_back(casilla+ARRIBA);
+    if (!es_posicion_pared(static_cast<int>(casilla + (size_t) MOVERSE_IZQUIERDA)) && !es_zona_peligrosa(casilla + (size_t) MOVERSE_IZQUIERDA) && !es_borde_izquierdo(casilla)){ //Casilla Izq a pyramid
+        conectar_casilla(casilla + (size_t) MOVERSE_IZQUIERDA, FACTOR_RIESGO * PESO_BASE, true);
+        conectar_casilla((casilla + (size_t) MOVERSE_IZQUIERDA), PESO_BASE, false);
+        peligrosas.push_back(casilla + (size_t) MOVERSE_IZQUIERDA);
 
     }
 
-    if (!es_posicion_pared(static_cast<int>(casilla + (size_t) ABAJO)) && !es_zona_peligrosa(casilla +
-                                                                                             (size_t) ABAJO) && !es_borde_inferior(casilla)){ //Casilla abajo a pyramid
-        conectar_casilla(casilla + (size_t) ABAJO, FACTOR_RIESGO * PESO_BASE, true);
-        conectar_casilla((casilla + (size_t) ABAJO), PESO_BASE, false);
-        peligrosas.push_back(casilla + (size_t) ABAJO);
+    if (!es_posicion_pared(static_cast<int>(casilla + MOVERSE_ARRIBA)) && !es_zona_peligrosa(casilla + MOVERSE_ARRIBA) && !es_borde_superior(casilla)){ //Casilla arriba a pyramid
+        conectar_casilla(casilla + MOVERSE_ARRIBA, FACTOR_RIESGO * PESO_BASE, true);
+        conectar_casilla((casilla + MOVERSE_ARRIBA), PESO_BASE, false);
+        peligrosas.push_back(casilla + MOVERSE_ARRIBA);
+
+    }
+
+    if (!es_posicion_pared(static_cast<int>(casilla + (size_t) MOVERSE_ABAJO)) && !es_zona_peligrosa(casilla +
+                                                                                                     (size_t) MOVERSE_ABAJO) && !es_borde_inferior(casilla)){ //Casilla abajo a pyramid
+        conectar_casilla(casilla + (size_t) MOVERSE_ABAJO, FACTOR_RIESGO * PESO_BASE, true);
+        conectar_casilla((casilla + (size_t) MOVERSE_ABAJO), PESO_BASE, false);
+        peligrosas.push_back(casilla + (size_t) MOVERSE_ABAJO);
 
     }
 
@@ -541,7 +535,7 @@ int Tablero::actualizar_posicion(int comando){
 
     size_t ESQUINA_SUPERIOR_IZQUIERDA = CANT_CASILLEROS-TAMANIO_TABLERO;
     size_t ESQUINA_INFERIOR_DERECHA = TAMANIO_TABLERO- 1 ;
-    
+
     /*No necesito verificar paredes o bordes. Si no se puede pasar, el camino sera un vector vacio.Pues:
     Caso Pared: "Dijkstra::obtener_camino" retornara un vector vacio, pues arista=INFINITO.
     Caso borde del layout: el vertice pos_destino no es valido en el borde inferior o superior,
@@ -553,22 +547,22 @@ int Tablero::actualizar_posicion(int comando){
     std::pair<std::vector<size_t>, int> movimiento;
     size_t pos_destino = static_cast <size_t> (pos_jugador + static_cast<size_t>(comando));
 
-    if(comando == 9 && (es_borde_superior(pos_jugador) || pos_jugador == ESQUINA_SUPERIOR_IZQUIERDA) ){
+    if(comando == MOVERSE_ARRIBA && (es_borde_superior(pos_jugador) || pos_jugador == ESQUINA_SUPERIOR_IZQUIERDA) ){
 
         std::cout << "No puedes moverte hacia alla!"<< endl;
         return 0;
 
-    } else if(comando == -9 && (es_borde_inferior(pos_jugador) || pos_jugador == ESQUINA_INFERIOR_DERECHA || pos_jugador == pos_entrada) ){
+    } else if(comando == MOVERSE_ABAJO && (es_borde_inferior(pos_jugador) || pos_jugador == ESQUINA_INFERIOR_DERECHA || pos_jugador == pos_entrada) ){
 
         std::cout << "No puedes moverte hacia alla!"<< endl;
         return 0;
 
-    } else if(comando == 1 && (es_borde_derecho(pos_jugador) || pos_jugador == ESQUINA_INFERIOR_DERECHA)){
+    } else if(comando == MOVERSE_DERECHA && (es_borde_derecho(pos_jugador) || pos_jugador == ESQUINA_INFERIOR_DERECHA)){
 
         std::cout << "No puedes moverte hacia alla!"<< endl;
         return 0;
 
-    } else if(comando == -1 && (es_borde_izquierdo(pos_jugador) || pos_jugador == ESQUINA_SUPERIOR_IZQUIERDA || pos_jugador == pos_entrada)){
+    } else if(comando == MOVERSE_IZQUIERDA && (es_borde_izquierdo(pos_jugador) || pos_jugador == ESQUINA_SUPERIOR_IZQUIERDA || pos_jugador == pos_entrada)){
 
         std::cout << "No puedes moverte hacia alla!"<< endl;
         return 0;
@@ -599,14 +593,14 @@ int Tablero::actualizar_posicion(int comando){
 void Tablero::conectar_casilleros(size_t casilla, size_t casilla_a_conectar, int peso, bool bidireccional) {
     if(bidireccional){
 
-        if(!es_posicion_pared(int(casilla_a_conectar)) && (casilla_a_conectar > ENTRADA && casilla_a_conectar < (CANT_CASILLEROS-1)) ){
+        if(!es_posicion_pared(int(casilla_a_conectar)) && (casilla_a_conectar >= ENTRADA && casilla_a_conectar < (CANT_CASILLEROS-1)) ){
             layout->cambiar_arista(casilla,casilla_a_conectar,peso);
             layout->cambiar_arista(casilla_a_conectar,casilla,peso);
         }
 
     } else{
 
-        if(!es_posicion_pared(int(casilla_a_conectar)) && !es_zona_peligrosa(casilla_a_conectar) && (casilla_a_conectar > ENTRADA && casilla_a_conectar < (CANT_CASILLEROS-1))){ //corregir
+        if(!es_posicion_pared(int(casilla_a_conectar)) && !es_zona_peligrosa(casilla_a_conectar) && (casilla_a_conectar >= ENTRADA && casilla_a_conectar < (CANT_CASILLEROS-1))){ //corregir
 
             layout->cambiar_arista(casilla,casilla_a_conectar,peso);
 
@@ -628,7 +622,7 @@ bool Tablero::es_posicion_final() {
     return pos_jugador == SALIDA;
 }
 
-bool Tablero::es_posicion_pyramid() {
+bool Tablero::es_matar_pyramid() {
     bool devolver = false;
     size_t i = 0;
     while( i < pos_pyramid.size() && !devolver){
@@ -672,7 +666,7 @@ bool Tablero::es_borde_inferior(size_t casilla){
 }
 
 void Tablero::eliminar_pyramid(int indice){
-    pos_pyramid[indice]=-1;
+    pos_pyramid[size_t(indice)]=-1;
 }
 
 void Tablero::establecer_matriz_tablero() {
@@ -748,6 +742,12 @@ void Tablero::mostrar_matriz_tablero() {
         std::cout << "\n";
 
     }
+
+}
+
+bool Tablero::esta_pyramid(size_t casilla) {
+
+    return int(casilla) == pos_pyramid[1] || int(casilla) == pos_pyramid[0];
 
 }
 

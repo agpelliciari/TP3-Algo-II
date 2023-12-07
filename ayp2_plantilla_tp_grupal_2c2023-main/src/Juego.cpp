@@ -126,8 +126,9 @@ void Juego::moverse_en_tablero(){
         }
     }
 
-   if (tablero_juego.es_posicion_pyramid())
+   if (tablero_juego.es_matar_pyramid())
     {
+        cout<<"Mataste a Pyramid Head"<<endl;
         romper_arma();
     }
 }
@@ -174,7 +175,25 @@ void Juego::usar_camino_minimo(){
         else
         {
             costo_total_movimientos += costo_camino_minimo;
+            bool condicion = false;
+            size_t i = 0;
+
+            while(i < posiciones_camino_minimo.size() && !condicion){
+
+               if(tablero_juego.esta_pyramid(posiciones_camino_minimo[i])){
+
+                   romper_arma();
+                   cout<<"Mataste a Pyramid Head"<<endl;
+                   condicion = true;
+
+               }
+
+               i++;
+
+            }
+
             nuevo_nivel();
+
         }
     }
 }

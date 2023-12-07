@@ -2,9 +2,9 @@
 #define TABLERO_HPP
 
 #define LADRILLO_EMOJI "\U0001f9f1"
-#define BLANCO_EMOJI "\u2B1C"
+#define BLANCO_EMOJI "\U0001f6e3\uFE0F"
 #define SALIDA_EMOJI "\U0001f3c1"
-#define NEGRO_EMOJI "\u2B1B"
+#define NEGRO_EMOJI "\u2622\uFE0F"
 #define ROJO_EMOJI "\U0001f7e5"
 
 #include <string>
@@ -91,7 +91,8 @@ private:
     //pos: Restaura todos los atributos del tablero.
     void restaurar_atributos();
 
-
+    //pre: -
+    //pos: Coloca los objetos en la matriz que luego sea mostrada en consola.
     void establecer_matriz_tablero();
 
 public:
@@ -110,25 +111,42 @@ public:
     //Pos: Actualiza las aristas de los pyramid en el layout en funcion de si el jugador tiene arma.
     void modificar_tablero(bool arma);
 
+    //Pre:-
+    //Pos: True si la posicion del jugador es la salida del nivel.
     bool es_posicion_final();
 
-    bool es_posicion_pyramid();
+    //Pre:-
+    //Pos: Devuelve true si elimina al pyramid head.
+    bool es_matar_pyramid();
 
     //Pre:-
     //Pos:Retorna un pair cuya "primer" componente es el vector de camino y la 2da el peso del mismo.
     std::pair<std::vector<size_t>,int> camino_automatico();
 
+    //Pre:-
+    //Pos: True si la casilla ingresada es adyacente al Pyramid, false en cualquier otro caso.
     bool es_zona_peligrosa(size_t casilla);
 
+    //Pre:-
+    //Pos: True si la casilla ingresada se encuentra en el borde superior.
     bool es_borde_superior(size_t casilla);
 
+    //Pre:-
+    //Pos: True si la casilla ingresada se encuentra en el borde inferior.
     bool es_borde_inferior(size_t casilla);
 
+    //Pre:-
+    //Pos: Muestra por consola la situacion actual del tablero.
     void mostrar_matriz_tablero();
 
+    //Pre:-
+    //Pos: True si la casilla ingresada tiene un pyramid.
+    bool esta_pyramid(size_t casilla);
+
+    //Destructor
     ~Tablero();
 
-    bool es_pyramid(int casilla);
+
 };
 
 #endif
