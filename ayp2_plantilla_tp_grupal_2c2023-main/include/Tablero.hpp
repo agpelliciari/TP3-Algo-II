@@ -63,7 +63,6 @@ private:
     //pos: Inicia el grafo conectando los vertices a traves de aristas de peso base. (GONZA, si le pifie editalo)
     void pre_tablero();
 
-
     //pre:-
     //pos: Indica si el numero ingresado es par.
     bool es_par(size_t numero);
@@ -128,6 +127,8 @@ public:
     void mostrar_matriz_tablero();
 
     ~Tablero();
+
+    bool es_pyramid(int casilla);
 };
 
 #endif

@@ -537,14 +537,91 @@ void Tablero::modificar_tablero(bool arma){
 
 int Tablero::actualizar_posicion(int comando){   
 
-    /*No necesito verificar paredes o bordes. Si no se puede pasar, el camino sera un vector vacio.Pues: 
+    size_t ESQUINA_SUPERIOR_IZQUIERDA = CANT_CASILLEROS-TAMANIO_TABLERO;
+    size_t ESQUINA_INFERIOR_DERECHA = TAMANIO_TABLERO- 1 ;
+
+    if(comando == 9 && !es_borde_superior(pos_jugador) && pos_jugador != ESQUINA_SUPERIOR_IZQUIERDA){
+
+        if(es_posicion_pared(int(pos_jugador)+9)){
+            cout<<"No te puedes mover alli"<<endl;
+            return 0;
+        }
+        else if(es_zona_peligrosa(pos_jugador+9)){
+
+            pos_jugador+=9;
+            return 50;
+
+        } else{
+            pos_jugador+=9;
+            return 10;
+
+        }
+
+
+    } else if(comando == -9 && !es_borde_inferior(pos_jugador) && pos_jugador != ESQUINA_INFERIOR_DERECHA){
+
+        if(es_posicion_pared(int(pos_jugador)-9) ){
+            cout<<"No te puedes mover alli"<<endl;
+            return 0;
+        }
+        else if(es_zona_peligrosa(pos_jugador-9)){
+
+            pos_jugador-=9;
+            return 50;
+
+        } else{
+            pos_jugador-=9;
+            return 10;
+
+        }
+
+    } else if(comando == 1 && !es_borde_derecho(pos_jugador) && pos_jugador != ESQUINA_INFERIOR_DERECHA){
+
+        if(es_posicion_pared(int(pos_jugador)+1)){
+            cout<<"No te puedes mover alli"<<endl;
+            return 0;
+        }
+        else if(es_zona_peligrosa(pos_jugador+1)){
+
+            pos_jugador+=1;
+            return 50;
+
+        } else{
+            pos_jugador+=1;
+            return 10;
+
+        }
+
+    } else if(comando == -1 && !es_borde_izquierdo(pos_jugador) && pos_jugador != ESQUINA_SUPERIOR_IZQUIERDA && pos_jugador != pos_entrada){
+        if(es_posicion_pared(int(pos_jugador)-1)){
+            cout<<"No te puedes mover alli"<<endl;
+            return 0;
+        }
+        else if(es_zona_peligrosa(pos_jugador-1)){
+
+            pos_jugador-=1;
+            return 50;
+
+        }else{
+
+            pos_jugador-=1;
+            return 10;
+
+        }
+    } else{
+
+        cout<<"No te puedes mover alli"<<endl;
+    }
+    return 0;
+
+    /*No necesito verificar paredes o bordes. Si no se puede pasar, el camino sera un vector vacio.Pues:
     Caso Pared: "Dijkstra::obtener_camino" retornara un vector vacio, pues arista=INFINITO.
     Caso borde del layout: el vertice pos_destino no es valido en el borde inferior o superior,
     asique Grafo::obtener_camino_minimo retorna vacio. En los bordes laterales, izquierdo o derecho,
-    para ir, por ejde :9->8 o 17->18 no estan conectados, entonces idem caso pared. Arista=INFINITO. 
+    para ir, por ejde :9->8 o 17->18 no estan conectados, entonces idem caso pared. Arista=INFINITO.
     Caso pyramid sin arma: IDEM caso Pared:retorna vector vacio, pues arista=INFINITO.*/
 
-    layout->usar_dijkstra();
+    /*/layout->usar_dijkstra();
     std::pair<std::vector<size_t>, int> movimiento;
     size_t pos_destino = static_cast <size_t> (pos_jugador + static_cast<size_t>(comando));
     movimiento=layout->obtener_camino_minimo(pos_jugador,pos_destino); //el movimiento es de donde a donde y cuanto cuesta
@@ -564,7 +641,7 @@ int Tablero::actualizar_posicion(int comando){
         i++;
     }
 
-    return movimiento.second;
+    return movimiento.second;/*/
 
     }
 
@@ -618,6 +695,12 @@ bool Tablero::es_posicion_pyramid() {
 
     }
     return devolver;
+}
+
+bool Tablero::es_pyramid(int casilla){
+
+   return (casilla == pos_pyramid[0]) || (casilla == pos_pyramid[1]);
+
 }
 
 bool Tablero::es_zona_peligrosa(size_t casilla){
