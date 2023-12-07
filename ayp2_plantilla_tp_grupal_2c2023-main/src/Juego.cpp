@@ -91,7 +91,7 @@ void Juego::partida(){
 }
 
 void Juego::moverse_en_tablero(){
-    int costo_movimiento;
+    int costo_movimiento = 0;
     string direccion;
 
     cout << "Para que direccion desea moverse? (W/A/S/D): " << endl;
